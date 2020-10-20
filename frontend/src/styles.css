@@ -1,0 +1,14 @@
+html,
+body,
+.App,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.App {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+}
