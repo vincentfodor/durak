@@ -8,7 +8,7 @@ const Logo = ({ fontSize = "medium", marginBottomPixelSize = "none" }) => {
             marginBottomPixelSize={marginBottomPixelSize}
         >
             <StyledLogoBold>DURAK</StyledLogoBold>
-            CHALLANGERS
+            CHALLENGERS
         </StyledLogo>
     );
 };

@@ -5,11 +5,12 @@ import { StyledButton } from "./index.style";
 const Button = ({
     color = "blue",
     type = "primary",
+    size = "small",
     onClick = () => {},
     children,
 }) => {
     return (
-        <StyledButton color={color} type={type} onClick={(e) => onClick(e)}>
+        <StyledButton color={color} type={type} size={size} onClick={(e) => onClick(e)}>
             {children}
         </StyledButton>
     );

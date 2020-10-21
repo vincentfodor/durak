@@ -2,13 +2,15 @@ import styled from "styled-components";
 
 import { ColorContrastSwitch, ColorSwitch } from "../../helpers/ColorHelper";
 import { FontSizeSwitch } from "../../helpers/FontSizeHelper";
+import { PixelSizeSwitch } from "../../helpers/PixelSizeHelper";
 
 const ButtonColorSwitch = (type = "primary", color = "blue") => {
     switch (type) {
         case "tertiary":
             return "transparent";
-        case "primary":
         case "secondary":
+            return ColorSwitch("black", 0.05);
+        case "primary":
         default:
             return ColorSwitch(color);
     }
@@ -21,7 +23,7 @@ const ButtonColorForegroundSwitch = (type = "primary", color = "blue") => {
         case "primary":
             return ColorContrastSwitch(color, 1);
         case "secondary":
-            return ColorSwitch(color, 1);
+            return ColorSwitch("black", 0.5);
         default:
             return ColorSwitch(color);
     }
@@ -34,7 +36,7 @@ const StyledButton = styled.button`
     color: ${({ type, color }) => ButtonColorForegroundSwitch(type, color)};
     border-radius: 3px;
     font-size: ${FontSizeSwitch("medium-small")};
-    padding: 8px 32px;
+    padding: ${({ size }) => PixelSizeSwitch(size)} 32px;
     box-sizing: border-box;
     cursor: pointer;
     outline: none;

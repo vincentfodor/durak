@@ -7,7 +7,7 @@ import {StyledHeader} from "./index.style"
 const Header = () => {
     return (
         <StyledHeader>
-            <Logo />
+            <Logo fontSize="medium" />
         </StyledHeader>
     )
 }

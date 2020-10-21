@@ -16,6 +16,7 @@ export default class Entry extends React.Component {
         password: "",
     };
 
+    
     switchLoginRegisterState = () => {
         this.setState((prevState) => ({
             isInLoginState: !prevState.isInLoginState,
