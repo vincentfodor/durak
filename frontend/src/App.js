@@ -7,6 +7,7 @@ import "./styles.css";
 import Header from "./components/Header";
 import Game from "./components/Game";
 import Entry from "./components/Entry";
+import Welcome from "./components/Welcome";
 
 const endpoint = "http://127.0.0.1:8080";
 
@@ -31,6 +32,9 @@ export default class App extends React.Component {
                 <BrowserRouter>
                     <Route exact path="/">
                         <Entry />
+                    </Route>
+                    <Route path="/welcome">
+                        <Welcome />
                     </Route>
                     <Route path="/play">
                         <Header gamename="Game 00001" />
