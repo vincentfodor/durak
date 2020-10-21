@@ -1,9 +1,16 @@
 import React from "react";
 
 import Header from "./Header";
-import {Table, TableRow, TableColumn, TableHeadColumn, TableHead, TableBody} from "../Table";
+import {
+    Table,
+    TableRow,
+    TableColumn,
+    TableHeadColumn,
+    TableHead,
+    TableBody,
+} from "../Table";
 
-import {StyledWelcome} from "./index.style"
+import { StyledWelcome } from "./index.style";
 import UserName from "../UserName";
 import Button from "../Button";
 
@@ -12,11 +19,18 @@ export default class Welcome extends React.Component {
         return (
             <StyledWelcome>
                 <Header />
-                <div style={{marginBottom: 30}}>
-                <h1>Good morning, vincentfodor!</h1>
-                <p>Ready for a game of durak?</p>
+                <div style={{ marginBottom: 30 }}>
+                    <h1>Good morning, vincentfodor!</h1>
+                    <p>Ready for a game of durak?</p>
                 </div>
-                <Table buttons={<Button size="extra-small">Create Game</Button>} rightButtons={<Button size="extra-small" type="tertiary">Refresh</Button>}>
+                <Table
+                    buttons={<Button size="extra-small">Create Game</Button>}
+                    rightButtons={
+                        <Button size="extra-small" variant="tertiary">
+                            Refresh
+                        </Button>
+                    }
+                >
                     <TableHead>
                         <TableRow>
                             <TableHeadColumn>Players</TableHeadColumn>
@@ -39,6 +53,6 @@ export default class Welcome extends React.Component {
                     </TableBody>
                 </Table>
             </StyledWelcome>
-        )
+        );
     }
-} 
+}

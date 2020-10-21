@@ -14,10 +14,10 @@ const APIHelper = {
             });
     },
     post: (targetFunction, configuration) => {
-        axios
+        return axios
             .post(`${CONFIG.backendEndpoint}/${targetFunction}`, configuration)
             .then((response) => {
-                return response;
+                return response.data;
             })
             .catch((error) => {
                 throw error;

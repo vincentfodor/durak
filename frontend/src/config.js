@@ -1,5 +1,5 @@
 const CONFIG = {
-    backendEndpoint: "http://localhost/3000",
+    backendEndpoint: "http://localhost:8080",
 };
 
 export default CONFIG;

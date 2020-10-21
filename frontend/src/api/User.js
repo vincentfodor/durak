@@ -2,14 +2,22 @@ import APIHelper from "../helpers/APIHelper";
 
 const User = {
     Register: (username, email, password, repeatedPassword) => {
-        const response = APIHelper.get("register", {
+        return APIHelper.post("register", {
             username,
             email,
             password,
             repeatedPassword,
-        });
-
-        console.log(response);
+        })
+            .then((res) => res)
+            .catch((err) => err);
+    },
+    Login: (username, password) => {
+        return APIHelper.post("login", {
+            username,
+            password,
+        })
+            .then((res) => res)
+            .catch((err) => err);
     },
 };
 

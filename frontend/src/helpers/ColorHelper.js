@@ -4,6 +4,8 @@ const ColorSwitch = (colorName = "black", opacityValue = 1) => {
             return `rgba(35, 145, 255, ${opacityValue})`;
         case "red":
             return `rgba(255, 104, 104, ${opacityValue})`;
+        case "light-green":
+            return `rgba(45, 242, 98, ${opacityValue})`;
         case "black":
         default:
             return `rgba(0, 0, 0, ${opacityValue})`;

@@ -2,16 +2,15 @@ import React from "react";
 
 import { StyledButton } from "./index.style";
 
-const Button = ({
-    color = "blue",
-    type = "primary",
-    size = "small",
-    onClick = () => {},
-    children,
-}) => {
+const Button = (props) => {
     return (
-        <StyledButton color={color} type={type} size={size} onClick={(e) => onClick(e)}>
-            {children}
+        <StyledButton
+            color={props.color}
+            variant={props.variant}
+            size={props.size}
+            {...props}
+        >
+            {props.children}
         </StyledButton>
     );
 };
