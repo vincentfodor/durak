@@ -4,38 +4,54 @@ import { ColorContrastSwitch, ColorSwitch } from "../../helpers/ColorHelper";
 import { FontSizeSwitch } from "../../helpers/FontSizeHelper";
 import { PixelSizeSwitch } from "../../helpers/PixelSizeHelper";
 
-const ButtonColorSwitch = (variant = "primary", color = "blue") => {
-    switch (variant) {
-        case "tertiary":
-            return "transparent";
-        case "secondary":
-            return ColorSwitch("black", 0.05);
-        case "primary":
-        default:
-            return ColorSwitch(color);
+const ButtonColorSwitch = (
+    disabled = false,
+    variant = "primary",
+    color = "blue"
+) => {
+    if (!disabled) {
+        switch (variant) {
+            case "tertiary":
+                return "transparent";
+            case "secondary":
+                return ColorSwitch("black", 0.05);
+            case "primary":
+            default:
+                return ColorSwitch(color);
+        }
+    } else {
+        return ColorSwitch("black", 0.05);
     }
 };
 
-const ButtonColorForegroundSwitch = (variant = "primary", color = "blue") => {
-    switch (variant) {
-        case "tertiary":
-            return ColorSwitch("black", 0.5);
-        case "primary":
-            return ColorContrastSwitch(color, 1);
-        case "secondary":
-            return ColorSwitch("black", 0.5);
-        default:
-            return ColorSwitch(color);
+const ButtonColorForegroundSwitch = (
+    disabled = false,
+    variant = "primary",
+    color = "blue"
+) => {
+    if (!disabled) {
+        switch (variant) {
+            case "tertiary":
+                return ColorSwitch("black", 0.5);
+            case "primary":
+                return ColorContrastSwitch(color, 1);
+            case "secondary":
+                return ColorSwitch("black", 0.5);
+            default:
+                return ColorSwitch(color);
+        }
+    } else {
+        return ColorSwitch("black", 0.5);
     }
 };
 
 const StyledButton = styled.button`
     background-color: transparent;
     border: none;
-    background-color: ${({ variant, color }) =>
-        ButtonColorSwitch(variant, color)};
-    color: ${({ variant, color }) =>
-        ButtonColorForegroundSwitch(variant, color)};
+    background-color: ${({ disabled, variant, color }) =>
+        ButtonColorSwitch(disabled, variant, color)};
+    color: ${({ disabled, variant, color }) =>
+        ButtonColorForegroundSwitch(disabled, variant, color)};
     border-radius: 3px;
     font-size: ${FontSizeSwitch("medium-small")};
     padding: ${({ size }) => PixelSizeSwitch(size)} 32px;
@@ -45,8 +61,8 @@ const StyledButton = styled.button`
 
     :hover,
     :focus {
-        background-color: ${({ variant, color }) =>
-            ButtonColorSwitch(variant, color)};
+        background-color: ${({ disabled, variant, color }) =>
+            ButtonColorSwitch(disabled, variant, color)};
     }
 `;
 

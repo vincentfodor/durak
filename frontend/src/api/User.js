@@ -7,17 +7,13 @@ const User = {
             email,
             password,
             repeatedPassword,
-        })
-            .then((res) => res)
-            .catch((err) => err);
+        });
     },
     Login: (username, password) => {
         return APIHelper.post("login", {
             username,
             password,
-        })
-            .then((res) => res)
-            .catch((err) => err);
+        });
     },
 };
 

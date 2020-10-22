@@ -37,7 +37,6 @@ export default class App extends React.Component {
                         <Welcome />
                     </Route>
                     <Route path="/play">
-                        <Header gamename="Game 00001" />
                         <Game socket={this.state.socket} />
                     </Route>
                 </BrowserRouter>

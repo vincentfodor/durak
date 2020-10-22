@@ -5,7 +5,7 @@ import {StyledUserName, StyledUserNameProfilePicture, StyledUserNameText} from "
 const UserName = ({username}) => {
     return (
         <StyledUserName>
-            <StyledUserNameProfilePicture src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" />
+            <StyledUserNameProfilePicture src="https://s3.amazonaws.com/37assets/svn/765-default-avatar.png" />
             <StyledUserNameText>
                 {username}
             </StyledUserNameText>

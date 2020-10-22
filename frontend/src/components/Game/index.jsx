@@ -4,8 +4,9 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 import Hand from "../Hand";
 import PlayingArea from "../PlayingArea";
+import Header from "../Header";
 
-import { StyledGame } from "./index.style";
+import { StyledGameWrapper, StyledGame } from "./index.style";
 
 export default class Game extends React.Component {
   state = {
@@ -104,28 +105,31 @@ export default class Game extends React.Component {
 
   render() {
     return (
-      <StyledGame>
-        <DndProvider backend={HTML5Backend}>
-          <Hand
-            opponent
-            trumpSign="♠"
-            cardCount={this.state.opponentCardCount}
-            socket={this.props.socket}
-          />
-          <PlayingArea
-            playingArea={this.state.playingArea}
-            appendCard={this.appendCard}
-            currentSelectedPlayingCard={this.state.currentSelectedPlayingCard}
-          />
-          <Hand
-            trumpSign="♠"
-            socket={this.props.socket}
-            cards={this.state.playerCards}
-            appendCard={this.appendCard}
-            setCurrentSelectedPlayingCard={this.setCurrentSelectedPlayingCard}
-          />
-        </DndProvider>
-      </StyledGame>
+      <StyledGameWrapper>
+        <Header gameid="ROOM00001" opponent="test" wins={0} loses={0} />
+        <StyledGame>
+          <DndProvider backend={HTML5Backend}>
+            <Hand
+              opponent
+              trumpSign="♠"
+              cardCount={this.state.opponentCardCount}
+              socket={this.props.socket}
+            />
+            <PlayingArea
+              playingArea={this.state.playingArea}
+              appendCard={this.appendCard}
+              currentSelectedPlayingCard={this.state.currentSelectedPlayingCard}
+            />
+            <Hand
+              trumpSign="♠"
+              socket={this.props.socket}
+              cards={this.state.playerCards}
+              appendCard={this.appendCard}
+              setCurrentSelectedPlayingCard={this.setCurrentSelectedPlayingCard}
+            />
+          </DndProvider>
+        </StyledGame>
+      </StyledGameWrapper>
     );
   }
 }

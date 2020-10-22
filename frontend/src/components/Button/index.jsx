@@ -8,6 +8,7 @@ const Button = (props) => {
             color={props.color}
             variant={props.variant}
             size={props.size}
+            disabled={props.disabled}
             {...props}
         >
             {props.children}

@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { PixelSizeSwitch } from "../../helpers/PixelSizeHelper";
 
-const StyledUserName = styled.span`
+const StyledUserName = styled(Link)`
     display: flex;
     align-items: center;
+    text-decoration: none;
 `;
 
 const StyledUserNameProfilePicture = styled.img`

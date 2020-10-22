@@ -1,39 +1,48 @@
 import styled from "styled-components";
+import { ColorSwitch } from "../../helpers/ColorHelper";
+import { PixelSizeSwitch } from "../../helpers/PixelSizeHelper";
 
 const StyledHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  background-color: rgba(0, 0, 0, 0.07);
-  padding: 15px;
+    display: flex;
+    height: 65px;
+    align-items: center;
+    margin: 0 0 15px 0;
+    padding: 0 25px;
+    background-color: ${ColorSwitch("black", 0.05)};
+`;
 
-  & > h1 {
+const StyledHeaderGameId = styled.p`
     margin: 0;
-    font-size: 16pt;
-    color: rgba(0, 0, 0, 0.9);
-    text-transform: uppercase;
-    align-self: center;
-  }
+    margin-left: ${PixelSizeSwitch("small")};
+    color: ${ColorSwitch("black", 0.5)};
 `;
 
-const StyledHeaderWinLoseRate = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-self: center;
-  justify-content: flex-end;
-  flex-grow: 1;
-
-  & > span {
-    background-color: rgba(0, 0, 0, 0.06);
-    padding: 8px 16px;
-    margin: 0 0 0 4px;
-    color: rgba(0, 0, 0, 0.6);
-  }
-
-  & > p {
-    margin: 0 8px;
-    align-self: center;
-    color: rgba(0, 0, 0, 0.6);
-  }
+const StyledHeaderStats = styled.div`
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+    align-items: center;
 `;
 
-export { StyledHeader, StyledHeaderWinLoseRate };
+const StyledHeaderStat = styled.div`
+    display: flex;
+    align-items: center;
+    margin-left: ${PixelSizeSwitch("medium")};
+
+    & > label {
+        margin-right: ${PixelSizeSwitch("small")};
+        color: ${ColorSwitch("black", 0.5)};
+    }
+
+    & > span {
+        padding: ${PixelSizeSwitch("small")} ${PixelSizeSwitch("medium-small")};
+        background-color: ${ColorSwitch("black", 0.05)};
+    }
+`;
+
+export {
+    StyledHeader,
+    StyledHeaderGameId,
+    StyledHeaderStats,
+    StyledHeaderStat,
+};

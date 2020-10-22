@@ -36,11 +36,12 @@ const StyledCardMiddle = styled.div`
     flex-grow: 1;
     align-items: center;
     justify-content: center;
-    color: ${({ color }) => color};
+
     & > p {
         font-size: 28pt;
         margin: 0;
         padding: 0;
+        color: ${({ color }) => color};
     }
 `;
 

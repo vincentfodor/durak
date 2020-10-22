@@ -1,18 +1,61 @@
 import React from "react";
 
-import { StyledHeader, StyledHeaderWinLoseRate } from "./index.style";
+import Logo from "../Logo";
+import UserName from "../UserName";
 
-const Header = ({ gamename }) => {
-  return (
-    <StyledHeader>
-      <h1>{gamename}</h1>
-      <StyledHeaderWinLoseRate>
-        <span>Wins: 1</span>
-        <p>{"‹"}</p>
-        <span>Loses: 2</span>
-      </StyledHeaderWinLoseRate>
-    </StyledHeader>
-  );
-};
+import {StyledHeader, StyledHeaderGameId, StyledHeaderStats, StyledHeaderStat} from "./index.style"
+
+const Header = ({gameid, wins, loses, opponent}) => {
+    const renderGameId = () => {
+        if(gameid) {
+            return gameid
+        }
+    }
+
+    const renderWins = () => {
+        if(wins != null) {
+             return (
+                <StyledHeaderStat>
+                    <label>Wins:</label>
+                    <span>{wins}</span>
+                </StyledHeaderStat>
+             )
+        }
+    }
+
+    const renderLoses = () => {
+        if(loses != null) {
+             return (
+                <StyledHeaderStat>
+                    <label>Loses:</label>
+                    <span>{loses}</span>
+                </StyledHeaderStat>
+             )
+        }
+    }
+
+    const renderOpponent = () => {
+        if(opponent) {
+            return (
+                <StyledHeaderStat>
+                    <label>Opponent:</label>
+                    <UserName username="test" />
+                </StyledHeaderStat>
+            )
+        }
+    }
+    
+    return (
+        <StyledHeader>
+            <Logo fontSize="medium" />
+            <StyledHeaderGameId>{renderGameId()}</StyledHeaderGameId>
+            <StyledHeaderStats>
+                {renderOpponent()}
+                {renderWins()}
+                {renderLoses()}
+            </StyledHeaderStats>
+        </StyledHeader>
+    )
+}
 
 export default Header;

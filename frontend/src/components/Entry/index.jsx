@@ -20,6 +20,7 @@ export default class Entry extends React.Component {
         loginErrors: [],
         registerSuccess: false,
         loginSuccess: false,
+        isLoading: false,
     };
 
     switchLoginRegisterState = () => {
@@ -31,7 +32,7 @@ export default class Entry extends React.Component {
     registerUser = (e) => {
         e.preventDefault();
 
-        this.setState({ registerErrors: [] });
+        this.setState({isLoading: true, registerErrors: []});
 
         User.Register(
             this.state.username,
@@ -45,14 +46,20 @@ export default class Entry extends React.Component {
                 } else {
                     this.setState({ registerSuccess: true });
                 }
+
+                this.setState({isLoading: false})
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                this.setState({registerErrors: [`${err.message}: Could not connect to server.`]})
+
+                this.setState({isLoading: false})
+            });
     };
 
     loginUser = (e) => {
         e.preventDefault();
 
-        this.setState({ loginErrors: [] });
+        this.setState({isLoading: true, loginErrors: []});
 
         User.Login(this.state.username, this.state.password)
             .then((res) => {
@@ -61,12 +68,19 @@ export default class Entry extends React.Component {
                 } else {
                     this.setState({ loginSuccess: true });
                 }
+
+                this.setState({isLoading: false})
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err)
+                this.setState({loginErrors: [`${err.message}: Could not connect to server.`]})
+
+                this.setState({isLoading: false})
+            });
     };
 
     renderRegisterErrors = () => {
-        if (this.state.registerErrors.length >= 0) {
+        if (this.state.registerErrors && this.state.registerErrors.length >= 0) {
             return this.state.registerErrors.map((errorMessage) => (
                 <Message color="red" marginBottomPixelSize="small">
                     {errorMessage}
@@ -76,7 +90,7 @@ export default class Entry extends React.Component {
     };
 
     renderLoginErrors = () => {
-        if (this.state.loginErrors.length >= 0) {
+        if (this.state.loginErrors && this.state.loginErrors.length >= 0) {
             return this.state.loginErrors.map((errorMessage) => (
                 <Message color="red" marginBottomPixelSize="small">
                     {errorMessage}
@@ -114,6 +128,7 @@ export default class Entry extends React.Component {
                             variant="primary"
                             size="small"
                             type="submit"
+                            disabled={this.state.isLoading}
                         >
                             Login
                         </Button>
@@ -181,7 +196,7 @@ export default class Entry extends React.Component {
                                 your account.
                             </Message>
                         ) : null}
-                        <Button color="blue" variant="primary" size="small">
+                        <Button color="blue" variant="primary" size="small" disabled={this.state.isLoading}>
                             Register
                         </Button>
                         <Button
