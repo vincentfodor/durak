@@ -1,9 +1,52 @@
 import styled from "styled-components";
+import { ColorSwitch } from "../../helpers/ColorHelper";
+import { PixelSizeSwitch } from "../../helpers/PixelSizeHelper";
 
-const StyledWelcomeWrapper = styled.div``;
-
-const StyledWelcome = styled.div`
-    padding: 0 25px;
+const StyledWelcomeWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
 `;
 
-export { StyledWelcomeWrapper, StyledWelcome };
+const StyledWelcome = styled.div`
+    display: flex;
+    height: 100%;
+    padding: ${PixelSizeSwitch("medium")};
+
+    @media only screen and (max-width: 600px) {
+        flex-direction: column;
+    }
+`;
+
+const StyledWelcomeMain = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+`;
+
+const StyledWelcomeMessage = styled.div`
+    margin-bottom: ${PixelSizeSwitch("medium-small")};
+`;
+
+const StyledWelcomeSecondary = styled.div`
+    width: 500px;
+    margin-right: ${PixelSizeSwitch("medium")};
+    background: ${ColorSwitch("black", 0.05)};
+    height: 300px;
+    padding: ${PixelSizeSwitch("medium")};
+    box-sizing: border-box;
+    border-radius: 3px;
+
+    @media only screen and (max-width: 600px) {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: ${PixelSizeSwitch("medium")};
+    }
+`;
+
+export {
+    StyledWelcomeWrapper,
+    StyledWelcome,
+    StyledWelcomeMain,
+    StyledWelcomeMessage,
+    StyledWelcomeSecondary,
+};

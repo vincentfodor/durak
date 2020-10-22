@@ -4,12 +4,16 @@ import CONFIG from "../config";
 
 const APIHelper = {
     get: (targetFunction, configuration) => {
-        axios.get(`${CONFIG.backendEndpoint}/${targetFunction}`, configuration);
-    },
-    post: (targetFunction, configuration) => {
-        return axios.post(
+        return axios.get(
             `${CONFIG.backendEndpoint}/${targetFunction}`,
             configuration
+        );
+    },
+    post: (targetFunction, configuration, headers = {}) => {
+        return axios.post(
+            `${CONFIG.backendEndpoint}/${targetFunction}`,
+            configuration,
+            { headers }
         );
     },
 };

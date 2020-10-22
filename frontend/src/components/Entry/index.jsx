@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router";
 import User from "../../api/User";
+import { GameContext } from "../../GameContext";
 
 import Button from "../Button";
 import { Textbox } from "../Input";
@@ -32,7 +33,7 @@ export default class Entry extends React.Component {
     registerUser = (e) => {
         e.preventDefault();
 
-        this.setState({isLoading: true, registerErrors: []});
+        this.setState({ isLoading: true, registerErrors: [] });
 
         User.Register(
             this.state.username,
@@ -40,47 +41,70 @@ export default class Entry extends React.Component {
             this.state.password,
             this.state.repeatedPassword
         )
-            .then((res) => {
-                if (!res.success) {
-                    this.setState({ registerErrors: res.errors });
+            .then(({ data }) => {
+                if (!data.success) {
+                    this.setState({ registerErrors: data.errors });
                 } else {
                     this.setState({ registerSuccess: true });
                 }
 
-                this.setState({isLoading: false})
+                this.setState({ isLoading: false });
             })
             .catch((err) => {
-                this.setState({registerErrors: [`${err.message}: Could not connect to server.`]})
+                this.setState({
+                    registerErrors: [
+                        `${err.message}: Could not connect to server.`,
+                    ],
+                });
 
-                this.setState({isLoading: false})
+                this.setState({ isLoading: false });
             });
     };
 
     loginUser = (e) => {
         e.preventDefault();
 
-        this.setState({isLoading: true, loginErrors: []});
+        this.setState({ isLoading: true, loginErrors: [] });
 
         User.Login(this.state.username, this.state.password)
-            .then((res) => {
-                if (!res.success) {
-                    this.setState({ loginErrors: res.errors });
+            .then(({ data }) => {
+                console.log(data);
+                if (!data.success) {
+                    this.setState({ loginErrors: data.errors });
                 } else {
                     this.setState({ loginSuccess: true });
+
+                    localStorage.setItem(
+                        "durak-challengers-auth",
+                        data.data.token
+                    );
+
+                    this.context.setUser({
+                        username: data.data.username,
+                        email: data.data.email,
+                        uuid: data.data.uuid,
+                    });
                 }
 
-                this.setState({isLoading: false})
+                this.setState({ isLoading: false });
             })
             .catch((err) => {
-                console.log(err)
-                this.setState({loginErrors: [`${err.message}: Could not connect to server.`]})
+                console.log(err);
+                this.setState({
+                    loginErrors: [
+                        `${err.message}: Could not connect to server.`,
+                    ],
+                });
 
-                this.setState({isLoading: false})
+                this.setState({ isLoading: false });
             });
     };
 
     renderRegisterErrors = () => {
-        if (this.state.registerErrors && this.state.registerErrors.length >= 0) {
+        if (
+            this.state.registerErrors &&
+            this.state.registerErrors.length >= 0
+        ) {
             return this.state.registerErrors.map((errorMessage) => (
                 <Message color="red" marginBottomPixelSize="small">
                     {errorMessage}
@@ -106,7 +130,7 @@ export default class Entry extends React.Component {
                     <Logo marginBottomPixelSize="medium" />
                     <form onSubmit={(e) => this.loginUser(e)}>
                         <Textbox
-                            label="Username:"
+                            label="E-Mail/Username:"
                             marginBottomPixelSize="medium-small"
                             value={this.state.username}
                             onChange={(e) =>
@@ -196,7 +220,12 @@ export default class Entry extends React.Component {
                                 your account.
                             </Message>
                         ) : null}
-                        <Button color="blue" variant="primary" size="small" disabled={this.state.isLoading}>
+                        <Button
+                            color="blue"
+                            variant="primary"
+                            size="small"
+                            disabled={this.state.isLoading}
+                        >
                             Register
                         </Button>
                         <Button
@@ -222,3 +251,5 @@ export default class Entry extends React.Component {
         );
     }
 }
+
+Entry.contextType = GameContext;

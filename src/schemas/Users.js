@@ -82,7 +82,8 @@ const Users = {
         DatabaseConnection.query(
             "SELECT \
                 users.username, \
-                users.password \
+                users.password, \
+                users.uuid \
             FROM \
                 durak.users \
             where \
@@ -95,7 +96,7 @@ const Users = {
             (error, response) => {
                 if (error) {
                     errors.push("Internal database connection error.");
-                    console.log(error);
+
                     callback(new APIResponse(errors));
 
                     return false;
@@ -103,6 +104,7 @@ const Users = {
 
                 if (response.length <= 0) {
                     errors.push("E-Mail/username or password was not correct.");
+
                     callback(new APIResponse(errors));
 
                     return false;
@@ -111,6 +113,7 @@ const Users = {
                 jwt.sign({ data: username }, secret, (err, token) => {
                     if (err) {
                         errors.push("Authentication error.");
+
                         callback(new APIResponse(errors));
 
                         return false;
@@ -118,6 +121,9 @@ const Users = {
 
                     callback(
                         new APIResponse(errors, {
+                            username: response[0].username,
+                            email: response[0].email,
+                            uuid: response[0].uuid,
                             token,
                         })
                     );
@@ -127,44 +133,59 @@ const Users = {
             }
         );
     },
-    Auth: (key, callback) => {
-        const decryptedKey = Decrypt(key);
+    Auth: (token, callback) => {
         const errors = [];
 
-        DatabaseConnection.query(
-            "\
-            SELECT \
-                users.username \
-            FROM \
-                durak.users \
-            WHERE \
-                users.username = ? \
-            ",
-            [decryptedKey],
-            (error, response) => {
-                if (error) {
-                    errors.push("Internal database connection error.");
-                    callback(new APIResponse(errors));
+        jwt.verify(token, secret, (err, decoded) => {
+            if (err) {
+                errors.push("Authentication error.");
 
-                    return false;
-                }
+                callback(new APIResponse(errors));
 
-                if (response.length <= 0) {
-                    errors.push("Authentication failed");
-                    callback(new APIResponse(errors));
-
-                    return false;
-                }
-
-                callback(
-                    new APIResponse(errors, {
-                        username: response[0].username,
-                    })
-                );
-
-                return true;
+                return false;
             }
-        );
+
+            DatabaseConnection.query(
+                "\
+                SELECT \
+                    users.username, \
+                    users.email, \
+                    users.uuid \
+                FROM \
+                    durak.users \
+                WHERE \
+                    users.username = ? \
+                ",
+                [decoded.data],
+                (error, response) => {
+                    if (error) {
+                        errors.push("Internal database connection error.");
+
+                        callback(new APIResponse(errors));
+
+                        return false;
+                    }
+
+                    if (response.length <= 0) {
+                        errors.push("Authentication failed");
+
+                        callback(new APIResponse(errors));
+
+                        return false;
+                    }
+
+                    callback(
+                        new APIResponse(errors, {
+                            username: response[0].username,
+                            email: response[0].email,
+                            uuid: response[0].uuid,
+                        })
+                    );
+
+                    return true;
+                }
+            );
+        });
     },
 };
 

@@ -15,6 +15,15 @@ const User = {
             password,
         });
     },
+    Auth: (token) => {
+        return APIHelper.post(
+            "auth",
+            {
+                token,
+            },
+            { "Authorization": token }
+        );
+    },
 };
 
 export default User;

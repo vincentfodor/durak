@@ -28,12 +28,29 @@ const StyledTableOverflow = styled.div`
     overflow-x: auto;
 `;
 
+const StyledTableScrollHandler = styled.div`
+    overflow-y: scroll;
+    max-height: ${({ rowsToDisplay }) =>
+        rowsToDisplay ? 78 + rowsToDisplay * 42 + "px" : 78 + 8 * 42 + "px"};
+    padding: 0 ${PixelSizeSwitch("medium-small")} 0 0;
+
+    @media only screen and (max-width: 600px) {
+        padding: 0;
+    }
+`;
+
 const StyledTable = styled.table`
     width: calc(100% - 1px);
     border-collapse: collapse;
 `;
 
-const StyledTableRow = styled.tr``;
+const StyledTableRow = styled.tr`
+    cursor: ${({ onClick }) => (onClick ? "pointer" : "inherit")};
+
+    :hover {
+        background-color: ${ColorSwitch("black", 0.02)};
+    }
+`;
 
 const StyledTableColumn = styled.td`
     border: 1px solid ${ColorSwitch("black", 0.1)};
@@ -59,6 +76,7 @@ export {
     StyledTableLeftButtons,
     StyledTableRightButtons,
     StyledTableOverflow,
+    StyledTableScrollHandler,
     StyledTable,
     StyledTableRow,
     StyledTableColumn,

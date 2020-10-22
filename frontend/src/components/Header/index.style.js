@@ -6,14 +6,12 @@ const StyledHeader = styled.div`
     display: flex;
     height: 65px;
     align-items: center;
-    margin: 0 0 15px 0;
-    padding: 0 25px;
+    padding: 0 ${PixelSizeSwitch("medium")};
     background-color: ${ColorSwitch("black", 0.05)};
 `;
 
 const StyledHeaderGameId = styled.p`
-    margin: 0;
-    margin-left: ${PixelSizeSwitch("small")};
+    margin: 0 ${PixelSizeSwitch("small")};
     color: ${ColorSwitch("black", 0.5)};
 `;
 
@@ -22,6 +20,7 @@ const StyledHeaderStats = styled.div`
     flex-grow: 1;
     justify-content: flex-end;
     align-items: center;
+    margin-right: ${PixelSizeSwitch("medium")};
 `;
 
 const StyledHeaderStat = styled.div`
@@ -35,8 +34,13 @@ const StyledHeaderStat = styled.div`
     }
 
     & > span {
-        padding: ${PixelSizeSwitch("small")} ${PixelSizeSwitch("medium-small")};
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background-color: ${ColorSwitch("black", 0.05)};
+        border-radius: 3px;
+        height: 35px;
+        width: 35px;
     }
 `;
 

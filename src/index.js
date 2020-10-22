@@ -9,8 +9,18 @@ const port = process.env.PORT || 8080;
 
 const RegisterHandler = require("./handlers/Register");
 const LoginHandler = require("./handlers/Login");
+const AuthHandler = require("./handlers/Auth");
+const GetGamesHandler = require("./handlers/GetGames");
+const CreateGameHandler = require("./handlers/CreateGame");
 
-const whitelist = ["http://localhost:3000"];
+const Games = require("./schemas/Games");
+
+//* undefined for local testing like postman or curl
+const whitelist = [
+    "http://localhost:3000",
+    "http://192.168.178.24:3000",
+    undefined,
+];
 
 var corsOptions = {
     origin: function (origin, callback) {
@@ -21,6 +31,8 @@ var corsOptions = {
         }
     },
 };
+
+Games.createGame("server", 1000, "init");
 
 app.use(cors(corsOptions));
 
@@ -33,6 +45,10 @@ app.use(bodyParser.json());
 
 app.post("/register", RegisterHandler);
 app.post("/login", LoginHandler);
+app.post("/auth", AuthHandler);
+app.post("/createGame", CreateGameHandler);
+
+app.get("/getGames", GetGamesHandler);
 
 server.listen(port, () => {
     console.log(`Server listening on port ${port}`);

@@ -1,20 +1,25 @@
 import React, { createContext } from "react";
 
-const GameContext = React.createContext();
-
-class GameContextProvider extends React.Component {
-    state = {
+const initialState = {
+    isLoggedIn: false,
+    user: {
         username: null,
-    };
+        email: null,
+        uuid: null,
+    },
+};
 
-    setUsername = (username) => this.setState({ username });
+export class GameContextProvider extends React.Component {
+    state = initialState;
+
+    setUser = (user) => this.setState({ user, isLoggedIn: true });
 
     render() {
         return (
             <GameContext.Provider
                 value={{
-                    username: this.state.username,
-                    setUsername: this.setUsername,
+                    user: this.state.user,
+                    setUser: this.setUser,
                 }}
             >
                 {this.props.children}
@@ -22,3 +27,5 @@ class GameContextProvider extends React.Component {
         );
     }
 }
+
+export const GameContext = React.createContext(initialState);
