@@ -1,7 +1,7 @@
 import React from "react";
 import PlayingAreaField from "../PlayingAreaField";
 
-import { StyledPlayingArea } from "./index.style";
+import { StyledPlayingArea, StyledPlayingAreaWrapper, StyledPlayingAreaFields, StyledPlayingAreaDeck } from "./index.style";
 
 const PlayingArea = ({
   playingArea,
@@ -19,7 +19,16 @@ const PlayingArea = ({
       />
     ));
 
-  return <StyledPlayingArea>{renderFields()}</StyledPlayingArea>;
+  return (
+    <StyledPlayingAreaWrapper>
+      <StyledPlayingArea>
+        <StyledPlayingAreaDeck>17</StyledPlayingAreaDeck>
+        <StyledPlayingAreaFields>
+          {renderFields()}
+        </StyledPlayingAreaFields>
+      </StyledPlayingArea>
+    </StyledPlayingAreaWrapper>
+  );
 };
 
 export default PlayingArea;

@@ -21,6 +21,10 @@ const StyledHeaderStats = styled.div`
     justify-content: flex-end;
     align-items: center;
     margin-right: ${PixelSizeSwitch("medium")};
+
+    @media only screen and (max-width: 924px) {
+        display: none;
+    }
 `;
 
 const StyledHeaderStat = styled.div`
@@ -44,9 +48,18 @@ const StyledHeaderStat = styled.div`
     }
 `;
 
+const StyledHeaderLeaveButtonWrapper = styled.div`
+    @media only screen and (max-width: 924px) {
+        display: flex;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+`;
+
 export {
     StyledHeader,
     StyledHeaderGameId,
     StyledHeaderStats,
     StyledHeaderStat,
+    StyledHeaderLeaveButtonWrapper,
 };

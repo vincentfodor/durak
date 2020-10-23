@@ -13,13 +13,25 @@ const StyledPlayingAreaField = styled.div`
             : hasCard
             ? "none"
             : "2px dashed rgba(0, 0, 0, 0.3)"};
-    padding: 10px;
     border-radius: 3px;
     padding: 0;
-    margin: 10px;
+    margin: 10px 10px 30px 10px;
+
     & > div {
         position: absolute;
         margin: 0;
+    }
+
+    @media only screen and (max-width: 924px) {
+        width: 56px;
+        height: 91px;
+        padding: 10px;
+        left: -20px;
+
+        & > div {
+            position: absolute;
+            margin: 0 -10px;
+        }
     }
 `;
 

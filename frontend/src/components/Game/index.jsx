@@ -10,7 +10,7 @@ import { StyledGameWrapper, StyledGame } from "./index.style";
 
 export default class Game extends React.Component {
     state = {
-        opponentCardCount: 3,
+        opponentCardCount: 6,
         playerCards: [
             {
                 id: 0,

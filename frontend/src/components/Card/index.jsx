@@ -9,8 +9,12 @@ import {
   StyledCardBottom
 } from "./index.style";
 
-const OpponentCard = () => {
-  return <StyledCard opponent />;
+const OpponentCard = ({children}) => {
+  return (
+    <StyledCard opponent>
+      <p>{children}</p>
+    </StyledCard>
+  );
 };
 
 const Card = ({

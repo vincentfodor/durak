@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { PixelSizeSwitch } from "../../helpers/PixelSizeHelper";
 
 const StyledGameWrapper = styled.div`
     display: flex;
@@ -9,7 +10,7 @@ const StyledGameWrapper = styled.div`
 const StyledGame = styled.div`
     display: flex;
     flex-grow: 1;
-    padding: 15px;
+    padding: ${PixelSizeSwitch("medium")};
     flex-direction: column;
 `;
 

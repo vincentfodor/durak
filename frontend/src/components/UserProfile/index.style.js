@@ -8,7 +8,6 @@ const StyledUserProfile = styled.div`
 const StyledUserProfilePic = styled.img`
     width: 50px;
     height: 50px;
-    margin: 0 15px 0 0;
     border-radius: 50%;
 `;
 

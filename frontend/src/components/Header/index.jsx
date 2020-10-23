@@ -10,6 +10,7 @@ import {
     StyledHeaderGameId,
     StyledHeaderStats,
     StyledHeaderStat,
+    StyledHeaderLeaveButtonWrapper
 } from "./index.style";
 import Loading from "../Loading";
 
@@ -77,7 +78,7 @@ const Header = ({
         if (leaveButton) {
             return (
                 <Button color="red" size="small" onClick={leaveGame}>
-                    Leave game
+                    Leave
                 </Button>
             );
         }
@@ -93,7 +94,9 @@ const Header = ({
                 {renderWins()}
                 {renderLoses()}
             </StyledHeaderStats>
-            {renderLeaveButton()}
+            <StyledHeaderLeaveButtonWrapper>
+                {renderLeaveButton()}
+            </StyledHeaderLeaveButtonWrapper>
         </StyledHeader>
     );
 };

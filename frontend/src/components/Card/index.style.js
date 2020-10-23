@@ -17,6 +17,11 @@ const StyledCard = styled.div`
     :hover {
         margin-top: ${({ opponent }) => (opponent ? "5px" : "-5px")};
     }
+
+    @media only screen and (max-width: 924px) {
+        width: 56px;
+        height: 91px;
+    }
 `;
 
 const StyledCardTop = styled.div`
