@@ -36,7 +36,7 @@ const ButtonColorForegroundSwitch = (
             case "primary":
                 return ColorContrastSwitch(color, 1);
             case "secondary":
-                return ColorSwitch("black", 0.5);
+                return ColorSwitch("black", 0.9);
             default:
                 return ColorSwitch(color);
         }

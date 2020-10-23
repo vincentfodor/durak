@@ -28,6 +28,8 @@ const Spin = keyframes`
 `;
 
 const StyledLoadingWrapper = styled.div`
+    position: ${({ lines }) => (lines ? "absolute" : "static")};
+
     ${StyledLoading}:last-child {
         margin-bottom: 0;
     }
@@ -36,14 +38,16 @@ const StyledLoadingWrapper = styled.div`
 const StyledLoading = styled.div`
     display: flex;
     align-items: center;
+    top: ${({ nth, height }) =>
+        nth ? nth * height + nth * 8 + "px" : "inherit"};
     justify-content: center;
     width: ${({ width }) => (width ? width : "100%")};
-    height: ${({ height }) => (height ? height : "22px")};
+    height: ${({ height }) => height + "px"};
     border-radius: 3px;
     background-color: ${ColorSwitch("black", 0.03)};
     animation: ${Flash} 1s ease-in-out infinite;
-    margin-bottom: ${({ linesToRender }) =>
-        linesToRender > 1 ? PixelSizeSwitch("small") : "0"};
+    margin-bottom: ${({ lines }) =>
+        lines > 1 ? PixelSizeSwitch("small") : "0"};
 `;
 
 const StyledLoadingIcon = styled.span`

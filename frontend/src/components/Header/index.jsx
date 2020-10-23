@@ -10,7 +10,7 @@ import {
     StyledHeaderGameId,
     StyledHeaderStats,
     StyledHeaderStat,
-    StyledHeaderLeaveButtonWrapper
+    StyledHeaderLeaveButtonWrapper,
 } from "./index.style";
 import Loading from "../Loading";
 
@@ -60,7 +60,7 @@ const Header = ({
                     <Loading
                         isLoading={waitingForOpponent}
                         width="100px"
-                        height="35px"
+                        height={35}
                         hasIcon
                     >
                         <UserName username="test" />

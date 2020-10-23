@@ -9,8 +9,8 @@ import {
 const Loading = ({
     isLoading,
     width,
-    height,
-    lines = 1,
+    height = 20,
+    lines,
     hasIcon,
     children,
 }) => {
@@ -20,13 +20,23 @@ const Loading = ({
         for (let i = 0; i < lines; i++) {
             if (hasIcon) {
                 linesToRender[i] = (
-                    <StyledLoading width={width} height={height}>
+                    <StyledLoading
+                        lines={lines}
+                        width={width}
+                        height={height}
+                        nth={i}
+                    >
                         <StyledLoadingIcon>◠</StyledLoadingIcon>
                     </StyledLoading>
                 );
             } else {
                 linesToRender[i] = (
-                    <StyledLoading width={width} height={height} />
+                    <StyledLoading
+                        lines={lines}
+                        width={width}
+                        height={height}
+                        nth={i}
+                    />
                 );
             }
         }
@@ -35,7 +45,17 @@ const Loading = ({
     };
 
     if (isLoading) {
-        return <StyledLoadingWrapper>{renderLines()}</StyledLoadingWrapper>;
+        if (lines) {
+            return <StyledLoadingWrapper>{renderLines()}</StyledLoadingWrapper>;
+        }
+
+        return (
+            <StyledLoadingWrapper lines={lines}>
+                <StyledLoading width={width} height={height}>
+                    {hasIcon ? <StyledLoadingIcon>◠</StyledLoadingIcon> : null}
+                </StyledLoading>
+            </StyledLoadingWrapper>
+        );
     }
 
     return children;

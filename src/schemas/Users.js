@@ -138,7 +138,7 @@ const Users = {
 
         jwt.verify(token, secret, (err, decoded) => {
             if (err) {
-                errors.push("Authentication error.");
+                errors.push("Auth-Token validation error.");
 
                 callback(new APIResponse(errors));
 
@@ -154,9 +154,10 @@ const Users = {
                 FROM \
                     durak.users \
                 WHERE \
-                    users.username = ? \
+                    users.username = ? OR \
+                    users.email = ? \
                 ",
-                [decoded.data],
+                [decoded.data, decoded.data],
                 (error, response) => {
                     if (error) {
                         errors.push("Internal database connection error.");
@@ -166,8 +167,10 @@ const Users = {
                         return false;
                     }
 
+                    console.log(decoded.data);
+
                     if (response.length <= 0) {
-                        errors.push("Authentication failed");
+                        errors.push("Authentication failed, no rows");
 
                         callback(new APIResponse(errors));
 

@@ -15,13 +15,20 @@ import {
     StyledTableBody,
 } from "./index.style";
 
-const Table = ({ children, width, buttons, rightButtons, rowsToDisplay }) => {
+const Table = ({
+    children,
+    width,
+    buttons,
+    rightButtons,
+    rowsToDisplay,
+    ref,
+}) => {
     const renderButtons = () => (buttons ? buttons : null);
 
     const renderRightButtons = () => (rightButtons ? rightButtons : null);
 
     return (
-        <StyledTableWrapper width={width}>
+        <StyledTableWrapper width={width} ref={ref}>
             <StyledTableButtons>
                 <StyledTableLeftButtons>
                     {renderButtons()}

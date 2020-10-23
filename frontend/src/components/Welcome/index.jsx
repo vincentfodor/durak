@@ -28,8 +28,14 @@ export default class Welcome extends React.Component {
     state = {
         isLoading: false,
         isLoadingGames: false,
+        mainContainerWidth: 0,
         games: [],
     };
+
+    constructor(props) {
+        super(props);
+        this.mainContainer = React.createRef();
+    }
 
     componentDidMount = () => {
         const auth = localStorage.getItem("durak-challengers-auth");
@@ -40,7 +46,11 @@ export default class Welcome extends React.Component {
             !this.context.user.uuid &&
             auth
         ) {
-            this.setState({ isLoading: true, isLoadingGames: true });
+            this.setState({
+                isLoading: true,
+                isLoadingGames: true,
+                mainContainerWidth: this.mainContainer.current.offsetWidth,
+            });
 
             User.Auth(auth)
                 .then(({ data }) => {
@@ -73,7 +83,7 @@ export default class Welcome extends React.Component {
         const currentHours = new Date().getHours();
 
         if (this.state.isLoading) {
-            return "loading";
+            return <Loading height={25} width="250px" />;
         }
 
         if (currentHours <= 18) {
@@ -127,7 +137,7 @@ export default class Welcome extends React.Component {
                 <Header />
                 <StyledWelcome>
                     <StyledWelcomeSecondary />
-                    <StyledWelcomeMain>
+                    <StyledWelcomeMain ref={this.mainContainer}>
                         <StyledWelcomeMessage>
                             <h1>
                                 <Loading
@@ -142,47 +152,45 @@ export default class Welcome extends React.Component {
                             </h1>
                             <p>Ready for a game of durak?</p>
                         </StyledWelcomeMessage>
-                        <Loading
-                            isLoading={this.state.isLoadingGames}
-                            lines={10}
-                            height="30px"
+                        <Table
+                            buttons={
+                                <Button
+                                    size="extra-small"
+                                    onClick={this.createGame}
+                                >
+                                    Create Game
+                                </Button>
+                            }
+                            rightButtons={
+                                <Button
+                                    size="extra-small"
+                                    variant="secondary"
+                                    disabled={this.state.isLoadingGames}
+                                    onClick={this.refreshGames}
+                                >
+                                    Refresh
+                                </Button>
+                            }
                         >
-                            <Table
-                                buttons={
-                                    <Button
-                                        size="extra-small"
-                                        onClick={this.createGame}
-                                    >
-                                        Create Game
-                                    </Button>
-                                }
-                                rightButtons={
-                                    <Button
-                                        size="extra-small"
-                                        variant="tertiary"
-                                        onClick={this.refreshGames}
-                                    >
-                                        Refresh
-                                    </Button>
-                                }
+                            <TableHead>
+                                <TableRow>
+                                    <TableHeadColumn>Players</TableHeadColumn>
+                                    <TableHeadColumn>GameID</TableHeadColumn>
+                                    <TableHeadColumn>
+                                        Created by
+                                    </TableHeadColumn>
+                                    <TableHeadColumn>Bet</TableHeadColumn>
+                                </TableRow>
+                            </TableHead>
+                            <Loading
+                                isLoading={this.state.isLoadingGames}
+                                lines={4}
+                                height={30}
+                                width={this.state.mainContainerWidth + "px"}
                             >
-                                <TableHead>
-                                    <TableRow>
-                                        <TableHeadColumn>
-                                            Players
-                                        </TableHeadColumn>
-                                        <TableHeadColumn>
-                                            GameID
-                                        </TableHeadColumn>
-                                        <TableHeadColumn>
-                                            Created by
-                                        </TableHeadColumn>
-                                        <TableHeadColumn>Bet</TableHeadColumn>
-                                    </TableRow>
-                                </TableHead>
                                 <TableBody>{this.renderGames()}</TableBody>
-                            </Table>
-                        </Loading>
+                            </Loading>
+                        </Table>
                     </StyledWelcomeMain>
                 </StyledWelcome>
             </StyledWelcomeWrapper>

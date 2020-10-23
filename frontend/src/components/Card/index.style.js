@@ -8,7 +8,7 @@ const StyledCard = styled.div`
     width: ${({ opponent }) => (opponent ? "56px" : "80px")};
     height: ${({ opponent }) => (opponent ? "91px" : "130px")};
     background-color: rgb(240, 240, 240);
-    margin: 5px;
+    margin: 0 5px;
     padding: 10px;
     border-radius: 3px;
     transition: margin-top 0.25s ease;

@@ -11,7 +11,7 @@ const StyledTableWrapper = styled.div`
 `;
 
 const StyledTableButtons = styled.div`
-    margin-bottom: ${PixelSizeSwitch("extra-small")};
+    margin-bottom: ${PixelSizeSwitch("medium-small")};
 `;
 
 const StyledTableLeftButtons = styled.div`
@@ -48,7 +48,8 @@ const StyledTableRow = styled.tr`
     cursor: ${({ onClick }) => (onClick ? "pointer" : "inherit")};
 
     :hover {
-        background-color: ${ColorSwitch("black", 0.02)};
+        background-color: ${({ onClick }) =>
+            onClick ? ColorSwitch("black", 0.02) : "inherit"};
     }
 `;
 

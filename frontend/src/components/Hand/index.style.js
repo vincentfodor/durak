@@ -26,7 +26,7 @@ const StyledHandCards = styled.div`
     display: block;
     text-align: center;
     margin: 10px 0 0 0;
-    height: 155px;
+    height: ${({ opponent }) => (opponent ? "inherit" : "155px")};
     white-space: nowrap;
 
     @media only screen and (max-width: 924px) {
