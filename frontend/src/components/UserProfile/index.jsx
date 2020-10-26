@@ -53,7 +53,7 @@ export default class UserProfile extends React.Component {
         return (
             <StyledUserProfile>
                 <StyledUserProfileMessage opponent={this.props.opponent} hasMessage={this.state.message !== null}>{this.state.message}</StyledUserProfileMessage>
-                <StyledUserProfilePic src="https://s3.amazonaws.com/37assets/svn/765-default-avatar.png" />
+                <StyledUserProfilePic opponent={this.props.opponent} src="https://s3.amazonaws.com/37assets/svn/765-default-avatar.png" />
                 {
                     this.renderMessageInput()
                 }

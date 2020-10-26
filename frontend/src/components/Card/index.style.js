@@ -23,11 +23,8 @@ const StyledCard = styled.div`
     }
 
     @media only screen and (max-width: 924px) {
-        width: 56px;
-        height: 91px;
-    }
-
-    @media only screen and (max-width: 420px) {
+        width: ${({ opponent }) => (opponent ? "40px" : "56px")};
+        height: ${({ opponent }) => (opponent ? "60px" : "91px")};
         padding: ${PixelSizeSwitch("extra-small")};
     }
 `;
@@ -42,7 +39,7 @@ const StyledCardTop = styled.div`
         padding: 0;
         align-self: center;
 
-        @media only screen and (max-width: 420px) {
+        @media only screen and (max-width: 924px) {
             font-size: ${FontSizeSwitch("small")};
         }
     }
@@ -60,7 +57,7 @@ const StyledCardMiddle = styled.div`
         padding: 0;
         color: ${({ color }) => color};
 
-        @media only screen and (max-width: 420px) {
+        @media only screen and (max-width: 924px) {
             font-size: ${FontSizeSwitch("medium")};
         }
     }
@@ -77,7 +74,7 @@ const StyledCardBottom = styled.div`
         padding: 0;
         align-self: center;
 
-        @media only screen and (max-width: 420px) {
+        @media only screen and (max-width: 924px) {
             font-size: ${FontSizeSwitch("small")};
         }
     }

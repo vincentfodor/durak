@@ -196,7 +196,7 @@ export default class Welcome extends React.Component {
                             currentXp={80}
                             nextXp={180}
                             currentLevel={4}
-                            totalXp={180}
+                            totalXp={300}
                         />
                     </StyledWelcomeMain>
                 </StyledWelcome>
