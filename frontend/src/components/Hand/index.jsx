@@ -69,8 +69,8 @@ export default class Hand extends React.Component {
                 <StyledHandCardsWrapper opponent={this.props.opponent}>
                     <StyledHandCards opponent={this.props.opponent}>
                         {this.renderCards()}
-                        {this.renderCardOverflow()}
                     </StyledHandCards>
+                    {this.renderCardOverflow()}
                 </StyledHandCardsWrapper>
             </StyledHand>
         );

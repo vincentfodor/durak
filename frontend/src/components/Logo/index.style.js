@@ -8,6 +8,10 @@ const StyledLogo = styled.span`
     font-size: ${({ fontSize }) => FontSizeSwitch(fontSize)};
     margin-bottom: ${({ marginBottomPixelSize }) =>
         PixelSizeSwitch(marginBottomPixelSize)};
+
+    @media only screen and (max-width: 420px) {
+        display: none;
+    }
 `;
 
 const StyledLogoBold = styled.span`

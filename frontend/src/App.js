@@ -38,9 +38,12 @@ export default class App extends React.Component {
                         <Route path="/welcome">
                             <Welcome />
                         </Route>
-                        <Route path="/play">
-                            <Game socket={this.state.socket} />
-                        </Route>
+                        <Route
+                            path="/play/:id"
+                            component={(props) => (
+                                <Game {...props} socket={this.state.socket} />
+                            )}
+                        ></Route>
                     </GameContextProvider>
                 </BrowserRouter>
             </div>

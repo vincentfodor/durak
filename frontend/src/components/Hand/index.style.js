@@ -11,33 +11,32 @@ const StyledHand = styled.div`
 `;
 
 const StyledHandCardsWrapper = styled.div`
+    display: flex;
     width: 100%;
+    align-items: center;
+    padding-top: ${PixelSizeSwitch("medium-small")};
+    justify-content: center;
 
-    padding-left: ${({ opponent }) => (opponent ? "47px" : "0")};
     box-sizing: border-box;
 
     @media only screen and (max-width: 924px) {
-        overflow-x: ${({ opponent }) => (!opponent ? "scroll" : "hidden")};
+        overflow-x: ${({ opponent }) => (opponent ? "hidden" : "scroll")};
         padding-bottom: ${PixelSizeSwitch("small")};
+        justify-content: flex-start;
     }
 `;
 
 const StyledHandCards = styled.div`
-    display: block;
+    display: flex;
+    align-items: center;
     text-align: center;
-    margin: 10px 0 0 0;
-    height: ${({ opponent }) => (opponent ? "inherit" : "155px")};
     white-space: nowrap;
-
-    @media only screen and (max-width: 924px) {
-        height: 120px;
-    }
+    padding-left: ${({ opponent }) => (opponent ? "47px" : "0")};
+    justify-content: flex-start;
 `;
 
 const StyledHandCardOverflow = styled.b`
-    position: relative;
     display: inline-flex;
-    top: 50px;
     height: 40px;
     width: 40px;
     border-radius: 50%;

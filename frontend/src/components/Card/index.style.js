@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+import { FontSizeSwitch } from "../../helpers/FontSizeHelper";
+import { PixelSizeSwitch } from "../../helpers/PixelSizeHelper";
+
 const StyledCard = styled.div`
     position: ${({ isTopCard }) => (isTopCard ? "absolute" : "relative")};
     top: ${({ isTopCard }) => (isTopCard ? "30px" : "0")};
@@ -8,8 +11,9 @@ const StyledCard = styled.div`
     width: ${({ opponent }) => (opponent ? "56px" : "80px")};
     height: ${({ opponent }) => (opponent ? "91px" : "130px")};
     background-color: rgb(240, 240, 240);
+    box-sizing: border-box;
     margin: 0 5px;
-    padding: 10px;
+    padding: ${PixelSizeSwitch("small")};
     border-radius: 3px;
     transition: margin-top 0.25s ease;
     cursor: ${({ opponent }) => (opponent ? "inherit" : "pointer")};
@@ -22,6 +26,10 @@ const StyledCard = styled.div`
         width: 56px;
         height: 91px;
     }
+
+    @media only screen and (max-width: 420px) {
+        padding: ${PixelSizeSwitch("extra-small")};
+    }
 `;
 
 const StyledCardTop = styled.div`
@@ -33,6 +41,10 @@ const StyledCardTop = styled.div`
         margin: 0 0 0 5px;
         padding: 0;
         align-self: center;
+
+        @media only screen and (max-width: 420px) {
+            font-size: ${FontSizeSwitch("small")};
+        }
     }
 `;
 
@@ -43,10 +55,14 @@ const StyledCardMiddle = styled.div`
     justify-content: center;
 
     & > p {
-        font-size: 28pt;
+        font-size: 32px;
         margin: 0;
         padding: 0;
         color: ${({ color }) => color};
+
+        @media only screen and (max-width: 420px) {
+            font-size: ${FontSizeSwitch("medium")};
+        }
     }
 `;
 
@@ -60,6 +76,10 @@ const StyledCardBottom = styled.div`
         margin: 0 0 0 5px;
         padding: 0;
         align-self: center;
+
+        @media only screen and (max-width: 420px) {
+            font-size: ${FontSizeSwitch("small")};
+        }
     }
 `;
 

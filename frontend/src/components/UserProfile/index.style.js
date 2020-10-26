@@ -9,6 +9,11 @@ const StyledUserProfilePic = styled.img`
     width: 50px;
     height: 50px;
     border-radius: 50%;
+
+    @media only screen and (max-width: 420px) {
+        width: 30px;
+        height: 30px;
+    }
 `;
 
 const StyledUserProfileMessage = styled.p`

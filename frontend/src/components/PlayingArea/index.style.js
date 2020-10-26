@@ -20,7 +20,7 @@ const StyledPlayingAreaFields = styled.div`
     text-align: center;
     flex-grow: 1;
     margin-left: 0;
-    padding: 0 50px;
+    padding: 0 30px;
 
     @media only screen and (max-width: 924px) {
         margin-left: 40px;

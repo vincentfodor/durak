@@ -1,12 +1,13 @@
 import React from "react";
 import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import HTML5toTouch from "react-dnd-multi-backend/dist/esm/HTML5toTouch";
 
 import Hand from "../Hand";
 import PlayingArea from "../PlayingArea";
 import Header from "../Header";
 
 import { StyledGameWrapper, StyledGame } from "./index.style";
+import MultiBackend from "react-dnd-multi-backend";
 
 export default class Game extends React.Component {
     state = {
@@ -64,6 +65,14 @@ export default class Game extends React.Component {
         playingArea: [{ position: 0, card: null, topCard: null }],
         currentSelectedPlayingCard: null,
         waitingForOpponent: true,
+        gameId: null,
+    };
+
+    componentDidMount = () => {
+        console.log(this.props.match);
+        this.setState({
+            gameId: this.props.match.params.id,
+        });
     };
 
     appendCard = (card, position) => {
@@ -114,7 +123,7 @@ export default class Game extends React.Component {
         return (
             <StyledGameWrapper>
                 <Header
-                    gameid="ROOM00001"
+                    gameid={this.state.gameId}
                     opponent="test"
                     wins={0}
                     loses={0}
@@ -122,7 +131,7 @@ export default class Game extends React.Component {
                     waitingForOpponent={this.state.waitingForOpponent}
                 />
                 <StyledGame>
-                    <DndProvider backend={HTML5Backend}>
+                    <DndProvider options={HTML5toTouch} backend={MultiBackend}>
                         <Hand
                             opponent
                             trumpSign="♠"
@@ -136,6 +145,7 @@ export default class Game extends React.Component {
                                 this.state.currentSelectedPlayingCard
                             }
                         />
+
                         <Hand
                             trumpSign="♠"
                             socket={this.props.socket}
