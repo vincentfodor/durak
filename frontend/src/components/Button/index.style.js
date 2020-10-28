@@ -32,7 +32,7 @@ const ButtonColorForegroundSwitch = (
     if (!disabled) {
         switch (variant) {
             case "tertiary":
-                return ColorSwitch("black", 0.5);
+                return ColorSwitch(color);
             case "primary":
                 return ColorContrastSwitch(color, 1);
             case "secondary":
@@ -55,6 +55,8 @@ const StyledButton = styled.button`
     border-radius: 3px;
     font-size: ${FontSizeSwitch("medium-small")};
     padding: ${({ size }) => PixelSizeSwitch(size)} 32px;
+    margin-right: ${({ marginRightPixelSize }) =>
+        marginRightPixelSize ? PixelSizeSwitch(marginRightPixelSize) : null};
     box-sizing: border-box;
     cursor: pointer;
     outline: none;

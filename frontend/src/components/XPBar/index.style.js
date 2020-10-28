@@ -71,7 +71,6 @@ const calculateXpPercentage = (current, total) => {
 };
 
 const StyledXPBarWrapper = styled.div`
-    margin-top: 25px;
     width: ${({ width }) => (width ? width + "px" : "inherit")};
 `;
 

@@ -9,6 +9,7 @@ const Button = (props) => {
             variant={props.variant}
             size={props.size}
             disabled={props.disabled}
+            marginRightPixelSize={props.marginRightPixelSize}
             {...props}
         >
             {props.children}

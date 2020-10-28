@@ -8,6 +8,10 @@ import Header from "../Header";
 
 import { StyledGameWrapper, StyledGame } from "./index.style";
 import MultiBackend from "react-dnd-multi-backend";
+import Dialog from "../Dialog";
+import {GameContext} from "../../GameContext";
+import XPBar from "../XPBar";
+import Button from "../Button";
 
 export default class Game extends React.Component {
     state = {
@@ -66,6 +70,7 @@ export default class Game extends React.Component {
         currentSelectedPlayingCard: null,
         waitingForOpponent: true,
         gameId: null,
+        isGameSummaryOpen: false
     };
 
     componentDidMount = () => {
@@ -122,6 +127,9 @@ export default class Game extends React.Component {
     render() {
         return (
             <StyledGameWrapper>
+                <Dialog open={this.state.isGameSummaryOpen} title="Congratulations, you won!" buttons={[<Button size="small" marginRightPixelSize="small">Play again</Button>, <Button variant="tertiary" color="red">Leave</Button>]}>
+                    <XPBar currentLevel={10} currentXp={1000} nextXp={1300} totalXp={2300} />
+                </Dialog>
                 <Header
                     gameid={this.state.gameId}
                     opponent="test"
@@ -132,6 +140,7 @@ export default class Game extends React.Component {
                 />
                 <StyledGame>
                     <DndProvider options={HTML5toTouch} backend={MultiBackend}>
+                        <Button size="small" onClick={() => this.setState({isGameSummaryOpen: true})}>Open game summary</Button>
                         <Hand
                             opponent
                             trumpSign="♠"
@@ -161,3 +170,5 @@ export default class Game extends React.Component {
         );
     }
 }
+
+Game.contextType = GameContext;
