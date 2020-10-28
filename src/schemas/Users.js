@@ -167,8 +167,6 @@ const Users = {
                         return false;
                     }
 
-                    console.log(decoded.data);
-
                     if (response.length <= 0) {
                         errors.push("Authentication failed, no rows");
 

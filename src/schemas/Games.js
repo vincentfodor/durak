@@ -1,3 +1,6 @@
+const APIResponse = require("./ApiResponse");
+const Game = require("./Game");
+
 const lobbys = [];
 
 const adjectives = [
@@ -54,14 +57,32 @@ const generateUniqueGameId = () => {
 };
 
 const Games = {
-    createGame: (creator, bet) => {
-        lobbys.push({
-            gameid: generateUniqueGameId(),
-            creator,
+    CreateGame: (creator, bet, maxPlayers) => {
+        const newGame = new Game(generateGameId(), creator, {
             bet,
+            maxPlayers,
+        });
+
+        lobbys.push(newGame);
+
+        console.log("[LOBBY] " + newGame.gameId + " has been created.");
+    },
+    FetchGames: () => lobbys,
+    JoinGame: (gameId, player) => {
+        let targetLobby = lobbys.filter((lobby) => lobby.gameId === gameId);
+
+        if (targetLobby.length === 0) {
+            return new APIResponse([
+                "Lobby with ID " + gameId + " does not exist.",
+            ]);
+        }
+
+        targetLobby = targetLobby[0];
+
+        return new APIResponse(false, {
+            drawnCards: targetLobby.DrawCards(6),
         });
     },
-    fetchGames: () => lobbys,
 };
 
 module.exports = Games;

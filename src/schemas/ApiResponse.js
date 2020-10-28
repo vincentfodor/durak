@@ -16,7 +16,6 @@ module.exports = class APIResponse {
 
         return {
             success: true,
-            errors,
             data,
         };
     }

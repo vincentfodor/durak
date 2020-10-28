@@ -12,8 +12,10 @@ const LoginHandler = require("./handlers/Login");
 const AuthHandler = require("./handlers/Auth");
 const GetGamesHandler = require("./handlers/GetGames");
 const CreateGameHandler = require("./handlers/CreateGame");
+const JoinGameHandler = require("./handlers/JoinGame");
 
 const Games = require("./schemas/Games");
+const Deck = require("./schemas/Deck");
 
 //* undefined for local testing like postman or curl
 const whitelist = [
@@ -32,7 +34,7 @@ var corsOptions = {
     },
 };
 
-Games.createGame("server", 1000, "init");
+Games.CreateGame("server", 1000, 2);
 
 app.use(cors(corsOptions));
 
@@ -46,9 +48,10 @@ app.use(bodyParser.json());
 app.post("/register", RegisterHandler);
 app.post("/login", LoginHandler);
 app.post("/auth", AuthHandler);
-app.post("/createGame", CreateGameHandler);
+app.post("/create", CreateGameHandler);
+app.post("/join", JoinGameHandler);
 
-app.get("/getGames", GetGamesHandler);
+app.get("/get", GetGamesHandler);
 
 server.listen(port, () => {
     console.log(`Server listening on port ${port}`);
