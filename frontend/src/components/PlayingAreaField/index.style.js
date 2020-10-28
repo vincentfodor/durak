@@ -7,7 +7,7 @@ const StyledPlayingAreaField = styled.div`
     flex-direction: column;
     width: 80px;
     height: 130px;
-    border: ${({ isOver, hasCard }) =>
+    outline: ${({ isOver, hasCard }) =>
         isOver
             ? `2px dashed ${ColorSwitch("blue")}`
             : hasCard
@@ -15,6 +15,7 @@ const StyledPlayingAreaField = styled.div`
             : "2px dashed rgba(0, 0, 0, 0.3)"};
     border-radius: 3px;
     padding: 0;
+    top: 10px;
     margin: 10px 10px 30px 10px;
     box-sizing: border-box;
 

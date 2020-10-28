@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { PixelSizeSwitch } from "../../helpers/PixelSizeHelper";
 
 const StyledUserProfile = styled.div`
     display: flex;
@@ -9,6 +10,9 @@ const StyledUserProfilePic = styled.img`
     width: 50px;
     height: 50px;
     border-radius: 50%;
+
+    margin-right: ${({ opponent }) =>
+        opponent ? 0 : PixelSizeSwitch("medium-small")};
 
     @media only screen and (max-width: 420px) {
         width: 30px;

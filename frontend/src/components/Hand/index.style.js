@@ -22,7 +22,8 @@ const StyledHandCardsWrapper = styled.div`
     @media only screen and (max-width: 924px) {
         overflow-x: ${({ opponent }) => (opponent ? "hidden" : "scroll")};
         padding-bottom: ${PixelSizeSwitch("small")};
-        justify-content: flex-start;
+        justify-content: ${({ opponent }) =>
+            opponent ? "center" : "flex-start"};
     }
 `;
 

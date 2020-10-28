@@ -71,12 +71,12 @@ const calculateXpPercentage = (current, total) => {
 };
 
 const StyledXPBarWrapper = styled.div`
-    margin-top: 25px;
     width: ${({ width }) => (width ? width + "px" : "inherit")};
 `;
 
 const StyledXPBarVisual = styled.div`
     display: flex;
+    align-items: center;
 `;
 
 const StyledXPBarLevel = styled.label`
@@ -98,10 +98,12 @@ const StyledXPBarAbsolute = styled.span`
     width: ${({ nextXp, totalXp }) => calculateXpPercentage(nextXp, totalXp)};
     float: left;
     height: 100%;
+    padding: ${PixelSizeSwitch("small")} 0;
     background-color: ${ColorSwitch("light-green")};
     animation: ${({ currentXp, nextXp, totalXp }) =>
             LevelAnimation(currentXp, nextXp, totalXp)}
         3s cubic-bezier(0.52, 0.05, 0.9, 0.42);
+    border-radius: 3px;
 `;
 
 const StyledXPBarDifference = styled.p`
