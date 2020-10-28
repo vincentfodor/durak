@@ -5,8 +5,8 @@ const StyledPlayingAreaField = styled.div`
     position: relative;
     display: inline-flex;
     flex-direction: column;
-    width: 100px;
-    height: 150px;
+    width: 80px;
+    height: 130px;
     border: ${({ isOver, hasCard }) =>
         isOver
             ? `2px dashed ${ColorSwitch("blue")}`
