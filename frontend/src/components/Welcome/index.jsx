@@ -23,7 +23,6 @@ import { GameContext } from "../../GameContext";
 import User from "../../api/User";
 import Loading from "../Loading";
 import Games from "../../api/Games";
-import XPBar from "../XPBar";
 
 export default class Welcome extends React.Component {
     state = {
@@ -192,12 +191,6 @@ export default class Welcome extends React.Component {
                                 <TableBody>{this.renderGames()}</TableBody>
                             </Loading>
                         </Table>
-                        <XPBar
-                            currentXp={80}
-                            nextXp={180}
-                            currentLevel={4}
-                            totalXp={300}
-                        />
                     </StyledWelcomeMain>
                 </StyledWelcome>
             </StyledWelcomeWrapper>
