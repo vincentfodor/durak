@@ -28,22 +28,22 @@ const StyledDialog = styled.div`
 
 const StyledDialogHeader = styled.div`
     background-color: ${ColorSwitch("black", 0.05)};
-    padding: ${PixelSizeSwitch("medium")};
+    padding: ${PixelSizeSwitch("medium-small")};
 
-    & > h1 {
-        font-size: ${FontSizeSwitch("medium-large")};
+    & > h2 {
+        font-size: ${FontSizeSwitch("medium")};
         margin: 0;
     }
 `;
 
 const StyledDialogBody = styled.div`
-    padding: ${PixelSizeSwitch("medium")};
+    padding: ${PixelSizeSwitch("medium-small")};
 `;
 
 const StyledDialogFooter = styled.div`
     display: flex;
     justify-content: flex-end;
-    padding: ${PixelSizeSwitch("medium")};
+    padding: ${PixelSizeSwitch("medium-small")};
 `;
 
 export {

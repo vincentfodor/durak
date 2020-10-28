@@ -1,35 +1,35 @@
 import React from "react";
 
-import {StyledDialogWrapper, StyledDialog, StyledDialogHeader, StyledDialogBody, StyledDialogFooter} from "./index.style";
+import {
+    StyledDialogWrapper,
+    StyledDialog,
+    StyledDialogHeader,
+    StyledDialogBody,
+    StyledDialogFooter,
+} from "./index.style";
 
-const Dialog = ({title, buttons, open, children}) => {
+const Dialog = ({ title, buttons, open, children }) => {
     const renderButtons = () => {
-        if(buttons) {
-            return buttons
+        if (buttons) {
+            return buttons;
         }
-    }
-    
-    if(open) {
+    };
+
+    if (open) {
         return (
             <StyledDialogWrapper>
                 <StyledDialog>
                     <StyledDialogHeader>
-                        <h1>{title}</h1>
+                        <h2>{title}</h2>
                     </StyledDialogHeader>
-                    <StyledDialogBody>
-                        {children}
-                    </StyledDialogBody>
-                    <StyledDialogFooter>
-                        {renderButtons()}
-                    </StyledDialogFooter>
+                    <StyledDialogBody>{children}</StyledDialogBody>
+                    <StyledDialogFooter>{renderButtons()}</StyledDialogFooter>
                 </StyledDialog>
             </StyledDialogWrapper>
-        )
+        );
     } else {
-        return (
-            <span />
-        )
+        return <span />;
     }
-}
+};
 
 export default Dialog;
