@@ -1,4 +1,3 @@
-const APIResponse = require("./ApiResponse");
 const Deck = require("./Deck");
 
 module.exports = class Game {
@@ -12,17 +11,31 @@ module.exports = class Game {
         this.deck.Generate();
     }
 
-    AddPlayer(newPlayer, callback) {
-        const errors = [];
-
+    AddPlayer = (newPlayer) => {
         if (this.config.maxPlayers < this.players.length) {
-            errors.push("Player limit reached.");
-
-            callback(new APIResponse());
+            return false;
         }
 
         this.players.push(newPlayer);
-    }
 
-    DrawCards = (n) => this.deck.DrawCards(n);
+        return true;
+    };
+
+    GetPlayer = (uuid) => {
+        return this.players.filter((player) => player.uuid === uuid)[0];
+    };
+
+    DrawCards = (uuid, n) => {
+        let cards = this.deck.DrawCards(n);
+        let targetPlayer = this.GetPlayer(uuid);
+
+        targetPlayer.hand = cards;
+
+        this.players = [
+            ...this.players.filter((player) => player.uuid !== uuid),
+            targetPlayer,
+        ];
+
+        return cards;
+    };
 };

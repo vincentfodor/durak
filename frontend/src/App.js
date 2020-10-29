@@ -4,7 +4,6 @@ import { BrowserRouter, Route } from "react-router-dom";
 
 import "./styles.css";
 
-import Header from "./components/Header";
 import Game from "./components/Game";
 import Entry from "./components/Entry";
 import Welcome from "./components/Welcome";

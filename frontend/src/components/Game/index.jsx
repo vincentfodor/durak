@@ -8,82 +8,56 @@ import Header from "../Header";
 
 import { StyledGameWrapper, StyledGame } from "./index.style";
 import MultiBackend from "react-dnd-multi-backend";
-import Dialog from "../Dialog";
-import {GameContext} from "../../GameContext";
-import XPBar from "../XPBar";
-import Button from "../Button";
+import { GameContext } from "../../GameContext";
+import Games from "../../api/Games";
+import ErrorHandler from "../Error";
 
 export default class Game extends React.Component {
     state = {
         opponentCardCount: 6,
-        playerCards: [
-            {
-                id: 0,
-                value: "A",
-                sign: "♥",
-                color: "#f04a30",
-            },
-            {
-                id: 1,
-                value: "7",
-                sign: "♠",
-                color: "rgba(0, 0, 0, 0.9)",
-            },
-            {
-                id: 2,
-                value: "10",
-                sign: "♠",
-                color: "rgba(0, 0, 0, 0.9)",
-            },
-            {
-                id: 3,
-                value: "J",
-                sign: "♦",
-                color: "#f04a30",
-            },
-            {
-                id: 4,
-                value: "J",
-                sign: "♣",
-                color: "rgba(0, 0, 0, 0.9)",
-            },
-            {
-                id: 5,
-                value: "J",
-                sign: "♣",
-                color: "rgba(0, 0, 0, 0.9)",
-            },
-            {
-                id: 6,
-                value: "J",
-                sign: "♣",
-                color: "rgba(0, 0, 0, 0.9)",
-            },
-            {
-                id: 7,
-                value: "J",
-                sign: "♣",
-                color: "rgba(0, 0, 0, 0.9)",
-            },
-        ],
+        playerCards: [],
         playingArea: [{ position: 0, card: null, topCard: null }],
         currentSelectedPlayingCard: null,
         waitingForOpponent: true,
         gameId: null,
-        isGameSummaryOpen: false
+        isLoading: true,
+        errorMessage: null,
+        errorSubMessage: null,
+        errorRedirect: null,
     };
 
     componentDidMount = () => {
-        console.log(this.props.match);
-        this.setState({
-            gameId: this.props.match.params.id,
-        });
+        this.setState(
+            {
+                gameId: this.props.match.params.id,
+            },
+            () => {
+                Games.Join(this.state.gameId, this.context.user).then(
+                    ({ data }) => {
+                        if (!data.success) {
+                            this.setState({
+                                errorMessage: data.errors[0],
+                                errorSubMessage: "Disconnecting...",
+                                errorRedirect: "/welcome",
+                            });
+
+                            return;
+                        }
+
+                        this.setState({
+                            playerCards: data.data.drawnCards,
+                            isLoading: false,
+                        });
+                    }
+                );
+            }
+        );
     };
 
     appendCard = (card, position) => {
         const newPlayingArea = this.state.playingArea;
         const newPlayerCards = this.state.playerCards.filter(
-            (currentCard) => currentCard !== card
+            (currentCard) => currentCard.uuid !== card.uuid
         );
 
         for (let i = 0; i < newPlayingArea.length; i++) {
@@ -127,9 +101,11 @@ export default class Game extends React.Component {
     render() {
         return (
             <StyledGameWrapper>
-                <Dialog open={this.state.isGameSummaryOpen} title="Congratulations, you won!" buttons={[<Button size="small" marginRightPixelSize="small">Play again</Button>, <Button variant="tertiary" color="red">Leave</Button>]}>
-                    <XPBar currentLevel={10} currentXp={1000} nextXp={1300} totalXp={2300} />
-                </Dialog>
+                <ErrorHandler
+                    message={this.state.errorMessage}
+                    subMessage={this.state.errorSubMessage}
+                    redirect={this.state.errorRedirect}
+                />
                 <Header
                     gameid={this.state.gameId}
                     opponent="test"
@@ -140,12 +116,12 @@ export default class Game extends React.Component {
                 />
                 <StyledGame>
                     <DndProvider options={HTML5toTouch} backend={MultiBackend}>
-                        <Button size="small" onClick={() => this.setState({isGameSummaryOpen: true})}>Open game summary</Button>
                         <Hand
                             opponent
-                            trumpSign="♠"
+                            trumpSuit="spade"
                             cardCount={this.state.opponentCardCount}
                             socket={this.props.socket}
+                            isLoading={this.state.isLoading}
                         />
                         <PlayingArea
                             playingArea={this.state.playingArea}
@@ -154,11 +130,11 @@ export default class Game extends React.Component {
                                 this.state.currentSelectedPlayingCard
                             }
                         />
-
                         <Hand
-                            trumpSign="♠"
+                            trumpSuit="spade"
                             socket={this.props.socket}
                             cards={this.state.playerCards}
+                            isLoading={this.state.isLoading}
                             appendCard={this.appendCard}
                             setCurrentSelectedPlayingCard={
                                 this.setCurrentSelectedPlayingCard

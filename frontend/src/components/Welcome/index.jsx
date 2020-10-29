@@ -23,6 +23,7 @@ import { GameContext } from "../../GameContext";
 import User from "../../api/User";
 import Loading from "../Loading";
 import Games from "../../api/Games";
+import { Redirect } from "react-router";
 
 export default class Welcome extends React.Component {
     state = {
@@ -30,6 +31,7 @@ export default class Welcome extends React.Component {
         isLoadingGames: false,
         mainContainerWidth: 0,
         games: [],
+        selectedGameId: null,
     };
 
     constructor(props) {
@@ -61,10 +63,9 @@ export default class Welcome extends React.Component {
                     });
 
                     Games.Fetch()
-                        .then((res) => {
-                            console.log(res);
+                        .then(({ data }) => {
                             this.setState({
-                                games: res.data.data,
+                                games: data.games,
                             });
                         })
                         .catch((err) => {
@@ -96,14 +97,15 @@ export default class Welcome extends React.Component {
     };
 
     renderGames = () => {
+        console.log(this.state);
         return this.state.games.map((game) => (
-            <TableRow onClick={() => this.joinGame(game.gameid)}>
+            <TableRow onClick={() => this.joinGame(game.gameId)}>
                 <TableColumn>1 / 2</TableColumn>
-                <TableColumn>{game.gameid}</TableColumn>
+                <TableColumn>{game.gameId}</TableColumn>
                 <TableColumn>
                     <UserName username={game.creator} />
                 </TableColumn>
-                <TableColumn>{game.bet}</TableColumn>
+                <TableColumn>{game.config.bet}</TableColumn>
             </TableRow>
         ));
     };
@@ -112,9 +114,9 @@ export default class Welcome extends React.Component {
         this.setState({ isLoadingGames: true });
 
         Games.Fetch()
-            .then((res) => {
+            .then(({ data }) => {
                 this.setState({
-                    games: res.data.data,
+                    games: data.games,
                     isLoadingGames: false,
                 });
             })
@@ -127,13 +129,19 @@ export default class Welcome extends React.Component {
         Games.Create(this.context.user);
     };
 
-    joinGame = (gameid) => {
-        window.location = `/play/${gameid}`;
+    joinGame = (gameId) => {
+        console.log(gameId);
+        this.setState({
+            selectedGameId: gameId,
+        });
     };
 
     render() {
         return (
             <StyledWelcomeWrapper>
+                {this.state.selectedGameId ? (
+                    <Redirect to={`/play/${this.state.selectedGameId}`} />
+                ) : null}
                 <Header />
                 <StyledWelcome>
                     <StyledWelcomeSecondary />

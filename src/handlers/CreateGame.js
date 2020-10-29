@@ -5,7 +5,5 @@ module.exports = (req, res) => {
 
     Games.CreateGame(creator, bet);
 
-    console.log("Game has been created!");
-
     res.end();
 };

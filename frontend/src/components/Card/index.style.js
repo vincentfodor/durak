@@ -40,7 +40,8 @@ const StyledCardTop = styled.div`
         align-self: center;
 
         @media only screen and (max-width: 924px) {
-            font-size: ${FontSizeSwitch("small")};
+            font-size: ${FontSizeSwitch("medium-small")};
+            font-weight: bold;
         }
     }
 `;
@@ -58,7 +59,8 @@ const StyledCardMiddle = styled.div`
         color: ${({ color }) => color};
 
         @media only screen and (max-width: 924px) {
-            font-size: ${FontSizeSwitch("medium")};
+            font-size: ${FontSizeSwitch("medium-large")};
+            font-weight: bold;
         }
     }
 `;
@@ -75,7 +77,8 @@ const StyledCardBottom = styled.div`
         align-self: center;
 
         @media only screen and (max-width: 924px) {
-            font-size: ${FontSizeSwitch("small")};
+            font-size: ${FontSizeSwitch("medium-small")};
+            font-weight: bold;
         }
     }
 `;

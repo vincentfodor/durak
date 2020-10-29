@@ -18,8 +18,8 @@ const ColorContrastSwitch = (colorName = "black", opacityValue = 1) => {
     switch (colorName) {
         case "blue":
         case "red":
-            return `rgba(255, 255, 255, ${opacityValue})`;
         case "black":
+            return `rgba(255, 255, 255, ${opacityValue})`;
         default:
             return `rgba(0, 0, 0, ${opacityValue})`;
     }

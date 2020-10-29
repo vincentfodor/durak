@@ -1,9 +1,7 @@
 const Games = require("../schemas/Games");
 
 module.exports = (req, res) => {
-    const { gameId } = req.body;
+    const { gameId, player } = req.body;
 
-    res.json({
-        data: Games.JoinGame(gameId),
-    });
+    res.json(Games.JoinGame(gameId, player));
 };

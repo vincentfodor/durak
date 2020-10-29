@@ -58,7 +58,7 @@ const generateUniqueGameId = () => {
 
 const Games = {
     CreateGame: (creator, bet, maxPlayers) => {
-        const newGame = new Game(generateGameId(), creator, {
+        const newGame = new Game(generateUniqueGameId(), creator, {
             bet,
             maxPlayers,
         });
@@ -66,6 +66,10 @@ const Games = {
         lobbys.push(newGame);
 
         console.log("[LOBBY] " + newGame.gameId + " has been created.");
+
+        return new APIResponse(false, {
+            newGame,
+        });
     },
     FetchGames: () => lobbys,
     JoinGame: (gameId, player) => {
@@ -79,8 +83,18 @@ const Games = {
 
         targetLobby = targetLobby[0];
 
+        if (targetLobby.GetPlayer(player.uuid)) {
+            console.log("Player already in lobby!");
+            console.log(targetLobby.GetPlayer(player.uuid));
+            return new APIResponse(false, {
+                drawnCards: targetLobby.GetPlayer(player.uuid).hand,
+            });
+        }
+
+        targetLobby.AddPlayer(player);
+
         return new APIResponse(false, {
-            drawnCards: targetLobby.DrawCards(6),
+            drawnCards: targetLobby.DrawCards(player.uuid, 6),
         });
     },
 };

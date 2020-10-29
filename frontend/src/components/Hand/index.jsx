@@ -26,20 +26,25 @@ export default class Hand extends React.Component {
     };
 
     renderPlayerCards = () => {
-        const { trumpSign, cards } = this.props;
+        const { trumpSuit, cards, isLoading } = this.props;
+
+        if (isLoading) {
+            return null;
+        }
 
         return cards
-            .sort((x) => (x.sign === trumpSign ? 0 : x ? -1 : 1))
+            .sort((x) => (x.suit === trumpSuit ? 0 : x ? -1 : 1))
             .map((card) => (
                 <Card
-                    key={`${card.id}-${card.value}`}
+                    key={`${card.uuid}`}
                     setCurrentSelectedPlayingCard={() =>
                         this.props.setCurrentSelectedPlayingCard(card)
                     }
                     opponent={this.props.opponent}
                     value={card.value}
                     sign={card.sign}
-                    color={card.color}
+                    suit={card.suit}
+                    uuid={card.uuid}
                 />
             ));
     };

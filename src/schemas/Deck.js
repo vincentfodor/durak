@@ -27,10 +27,9 @@ module.exports = class Deck {
         }
 
         for (let i = 0; i < n; i++) {
-            let randomCardIndex = Math.floor(
-                Math.random() * this.cards.length + 1
-            );
-            let randomCard = this.cards[randomCardIndex];
+            let randomCard = this.cards[
+                Math.floor(Math.random() * this.cards.length)
+            ];
 
             this.cards = this.cards.filter((card) => card !== randomCard);
 
