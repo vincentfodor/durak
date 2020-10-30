@@ -10,7 +10,7 @@ import { StyledGameWrapper, StyledGame } from "./index.style";
 import MultiBackend from "react-dnd-multi-backend";
 import { GameContext } from "../../GameContext";
 import Games from "../../api/Games";
-import ErrorHandler from "../Error";
+import ErrorHandler from "../ErrorHandler";
 
 export default class Game extends React.Component {
     state = {
@@ -30,6 +30,8 @@ export default class Game extends React.Component {
         this.setState(
             {
                 gameId: this.props.match.params.id,
+                errorMessage: "This is some error!",
+                errorSubMessage: "This is a submessage..."
             },
             () => {
                 Games.Join(this.state.gameId, this.context.user).then(

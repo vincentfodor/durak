@@ -15,14 +15,17 @@ import {
     StyledWelcome,
     StyledWelcomeMain,
     StyledWelcomeMessage,
-    StyledWelcomeSecondary,
+    StyledWelcomeSecondary
 } from "./index.style";
+
 import UserName from "../UserName";
 import Button from "../Button";
 import { GameContext } from "../../GameContext";
 import User from "../../api/User";
 import Loading from "../Loading";
 import Games from "../../api/Games";
+import Profile from "../Profile";
+import ErrorHandler from "../ErrorHandler";
 import { Redirect } from "react-router";
 
 export default class Welcome extends React.Component {
@@ -32,6 +35,7 @@ export default class Welcome extends React.Component {
         mainContainerWidth: 0,
         games: [],
         selectedGameId: null,
+        errorMessage: null
     };
 
     constructor(props) {
@@ -69,11 +73,15 @@ export default class Welcome extends React.Component {
                             });
                         })
                         .catch((err) => {
-                            // TODO: Handle fetch games error
+                            this.setState({
+                                errorMessage: err
+                            })
                         });
                 })
                 .catch((err) => {
-                    // TODO: Handle login error
+                    this.setState({
+                        errorMessage: err
+                    })
                 });
 
             this.setState({ isLoading: false, isLoadingGames: false });
@@ -97,7 +105,6 @@ export default class Welcome extends React.Component {
     };
 
     renderGames = () => {
-        console.log(this.state);
         return this.state.games.map((game) => (
             <TableRow onClick={() => this.joinGame(game.gameId)}>
                 <TableColumn>1 / 2</TableColumn>
@@ -121,12 +128,18 @@ export default class Welcome extends React.Component {
                 });
             })
             .catch((err) => {
-                // TODO: Handle fetch games error
+                this.setState({
+                    errorMessage: err
+                })
             });
     };
 
     createGame = () => {
-        Games.Create(this.context.user);
+        Games.Create(this.context.user).catch(err => {
+            this.setState({
+                errorMessage: "Couldn't create game"
+            })
+        })
     };
 
     joinGame = (gameId) => {
@@ -139,12 +152,15 @@ export default class Welcome extends React.Component {
     render() {
         return (
             <StyledWelcomeWrapper>
+                <ErrorHandler message={this.state.errorMessage} />
                 {this.state.selectedGameId ? (
                     <Redirect to={`/play/${this.state.selectedGameId}`} />
                 ) : null}
                 <Header />
                 <StyledWelcome>
-                    <StyledWelcomeSecondary />
+                    <StyledWelcomeSecondary>
+                        <Profile />
+                    </StyledWelcomeSecondary>
                     <StyledWelcomeMain ref={this.mainContainer}>
                         <StyledWelcomeMessage>
                             <h1>
