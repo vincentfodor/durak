@@ -8,6 +8,7 @@ const Games = {
         return APIHelper.post("create", {
             creator: user.username,
             bet: 1000,
+            maxPlayers: 2,
         });
     },
     Join: (gameId, player) => {

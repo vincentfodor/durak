@@ -109,7 +109,7 @@ export default class Welcome extends React.Component {
     renderGames = () => {
         return this.state.games.map((game) => (
             <TableRow onClick={() => this.joinGame(game.gameId)}>
-                <TableColumn>1 / 2</TableColumn>
+                <TableColumn>1 / {game.config.maxPlayers}</TableColumn>
                 <TableColumn>{game.gameId}</TableColumn>
                 <TableColumn>
                     <UserName username={game.creator} />
