@@ -10,7 +10,7 @@ const StyledCard = styled.div`
     flex-direction: column;
     width: ${({ opponent }) => (opponent ? "56px" : "80px")};
     height: ${({ opponent }) => (opponent ? "91px" : "130px")};
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(245, 240, 240);
     box-sizing: border-box;
     margin: 0 5px;
     padding: ${PixelSizeSwitch("small")};
