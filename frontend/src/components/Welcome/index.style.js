@@ -30,8 +30,6 @@ const StyledWelcomeMessage = styled.div`
 const StyledWelcomeSecondary = styled.div`
     width: 500px;
     margin-right: ${PixelSizeSwitch("medium")};
-    background: ${ColorSwitch("black", 0.05)};
-    height: 300px;
     padding: ${PixelSizeSwitch("medium")};
     box-sizing: border-box;
     border-radius: 3px;
@@ -48,5 +46,5 @@ export {
     StyledWelcome,
     StyledWelcomeMain,
     StyledWelcomeMessage,
-    StyledWelcomeSecondary,
+    StyledWelcomeSecondary
 };

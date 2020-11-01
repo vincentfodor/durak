@@ -24,7 +24,7 @@ const XPBar = ({ currentXp, nextXp, totalXp, currentLevel, width }) => {
                         nextXp={nextXp}
                         totalXp={totalXp}
                     >
-                        <StyledXPBarDifference currentXp={currentXp}>
+                        <StyledXPBarDifference currentXp={currentXp} nextXp={nextXp}>
                             +{(currentXp - nextXp) * -1} XP
                         </StyledXPBarDifference>
                     </StyledXPBarAbsolute>

@@ -95,14 +95,13 @@ const StyledXPBar = styled.span`
 const StyledXPBarAbsolute = styled.span`
     display: flex;
     align-items: center;
-    width: ${({ nextXp, totalXp }) => calculateXpPercentage(nextXp, totalXp)};
+    width: ${({ currentXp, nextXp, totalXp }) => nextXp ? calculateXpPercentage(nextXp, totalXp) : calculateXpPercentage(currentXp, totalXp)}};
     float: left;
     height: 100%;
     padding: ${PixelSizeSwitch("small")} 0;
     background-color: ${ColorSwitch("light-green")};
     animation: ${({ currentXp, nextXp, totalXp }) =>
-            LevelAnimation(currentXp, nextXp, totalXp)}
-        3s cubic-bezier(0.52, 0.05, 0.9, 0.42);
+            nextXp ? `${LevelAnimation(currentXp, nextXp, totalXp)} 3s cubic-bezier(0.52, 0.05, 0.9, 0.42)` : "none"};
     border-radius: 3px;
 `;
 
@@ -110,7 +109,7 @@ const StyledXPBarDifference = styled.p`
     margin: 0;
     padding-right: ${PixelSizeSwitch("small")};
     opacity: 0;
-    animation: ${DifferenceAnimation} 1800ms ease-out;
+    animation: ${({nextXp}) => nextXp ? `${DifferenceAnimation} 1800ms ease-out` : "none"};
     font-weight: 600;
     color: ${ColorSwitch("white")};
     flex-grow: 1;
