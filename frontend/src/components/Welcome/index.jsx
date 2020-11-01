@@ -137,15 +137,21 @@ export default class Welcome extends React.Component {
     };
 
     createGame = () => {
-        Games.Create(this.context.user).catch((err) => {
-            this.setState({
-                errorMessage: "Couldn't create game",
+        Games.Create(this.context.user)
+            .then(({ data }) => {
+                if (data.success) {
+                    this.joinGame(data.data.newGame.gameId);
+                }
+            })
+            .catch((err) => {
+                this.setState({
+                    errorMessage: "Couldn't create game",
+                });
             });
-        });
+        this.joinGame();
     };
 
     joinGame = (gameId) => {
-        console.log(gameId);
         this.setState({
             selectedGameId: gameId,
         });
@@ -180,16 +186,13 @@ export default class Welcome extends React.Component {
                         </StyledWelcomeMessage>
                         <Table
                             buttons={
-                                <Button
-                                    size="extra-small"
-                                    onClick={this.createGame}
-                                >
+                                <Button size="small" onClick={this.createGame}>
                                     Create Game
                                 </Button>
                             }
                             rightButtons={
                                 <Button
-                                    size="extra-small"
+                                    size="small"
                                     variant="secondary"
                                     disabled={this.state.isLoadingGames}
                                     onClick={this.refreshGames}
