@@ -28,7 +28,8 @@ const StyledWelcomeMessage = styled.div`
 `;
 
 const StyledWelcomeSecondary = styled.div`
-    width: 500px;
+    flex-basis: 450px;
+    flex-shrink: 0;
     margin-right: ${PixelSizeSwitch("medium")};
     padding: ${PixelSizeSwitch("medium")};
     box-sizing: border-box;

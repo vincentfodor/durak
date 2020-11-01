@@ -10,6 +10,7 @@ const StyledProfile = styled.div`
     & > p {
         font-size: ${FontSizeSwitch("medium")};
         margin-bottom: ${PixelSizeSwitch("medium")};
+        text-align: left;
     }
 `;
 
