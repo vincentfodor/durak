@@ -30,13 +30,13 @@ const Card = ({
     const renderSign = (suit) => {
         switch (suit) {
             case "heart":
-                return "♡";
+                return "♥";
             case "diamond":
-                return "♢";
+                return "♦";
             case "spade":
-                return "♤";
+                return "♠";
             case "club":
-                return "♧";
+                return "♣";
         }
     };
 

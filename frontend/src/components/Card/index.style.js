@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import { FontSizeSwitch } from "../../helpers/FontSizeHelper";
 import { PixelSizeSwitch } from "../../helpers/PixelSizeHelper";
+import { ColorSwitch } from "../../helpers/ColorHelper";
 
 const StyledCard = styled.div`
     position: ${({ isTopCard }) => (isTopCard ? "absolute" : "relative")};
@@ -10,13 +11,15 @@ const StyledCard = styled.div`
     flex-direction: column;
     width: ${({ opponent }) => (opponent ? "56px" : "80px")};
     height: ${({ opponent }) => (opponent ? "91px" : "130px")};
-    background-color: rgb(245, 240, 240);
+    background-color: ${ColorSwitch("white")};
     box-sizing: border-box;
     margin: 0 5px;
     padding: ${PixelSizeSwitch("small")};
     border-radius: 3px;
     transition: margin-top 0.25s ease;
     cursor: ${({ opponent }) => (opponent ? "inherit" : "pointer")};
+    box-shadow: ${({ opponent }) =>
+        opponent ? "none" : "0 4px 4px " + ColorSwitch("black", 0.05)};
 
     :hover {
         margin-top: ${({ opponent }) => (opponent ? "5px" : "-5px")};
@@ -41,7 +44,7 @@ const StyledCardTop = styled.div`
 
         @media only screen and (max-width: 924px) {
             font-size: ${FontSizeSwitch("medium-small")};
-            font-weight: bold;
+            font-weight: normal;
         }
     }
 `;
@@ -60,7 +63,7 @@ const StyledCardMiddle = styled.div`
 
         @media only screen and (max-width: 924px) {
             font-size: ${FontSizeSwitch("medium-large")};
-            font-weight: bold;
+            font-weight: normal;
         }
     }
 `;
@@ -78,7 +81,7 @@ const StyledCardBottom = styled.div`
 
         @media only screen and (max-width: 924px) {
             font-size: ${FontSizeSwitch("medium-small")};
-            font-weight: bold;
+            font-weight: normal;
         }
     }
 `;
