@@ -7,7 +7,7 @@ import "./styles.css";
 import Game from "./components/Game";
 import Entry from "./components/Entry";
 import Welcome from "./components/Welcome";
-import { GameContextProvider } from "./GameContext";
+import { UserProvider } from "./UserContext";
 
 const endpoint = "http://127.0.0.1:8080";
 
@@ -30,7 +30,7 @@ export default class App extends React.Component {
         return (
             <div className="App">
                 <BrowserRouter>
-                    <GameContextProvider>
+                    <UserProvider>
                         <Route exact path="/">
                             <Entry />
                         </Route>
@@ -43,7 +43,7 @@ export default class App extends React.Component {
                                 <Game {...props} socket={this.state.socket} />
                             )}
                         ></Route>
-                    </GameContextProvider>
+                    </UserProvider>
                 </BrowserRouter>
             </div>
         );

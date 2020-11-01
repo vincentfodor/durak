@@ -8,9 +8,9 @@ import Header from "../Header";
 
 import { StyledGameWrapper, StyledGame } from "./index.style";
 import MultiBackend from "react-dnd-multi-backend";
-import { GameContext } from "../../GameContext";
 import Games from "../../api/Games";
 import ErrorHandler from "../ErrorHandler";
+import { UserContext } from "../../UserContext";
 
 export default class Game extends React.Component {
     state = {
@@ -147,4 +147,4 @@ export default class Game extends React.Component {
     }
 }
 
-Game.contextType = GameContext;
+Game.contextType = UserContext;

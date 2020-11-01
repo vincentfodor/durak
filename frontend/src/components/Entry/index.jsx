@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router";
 import User from "../../api/User";
-import { GameContext } from "../../GameContext";
+import { UserContext } from "../../UserContext";
 
 import Button from "../Button";
 import { Textbox } from "../Input";
@@ -252,4 +252,4 @@ export default class Entry extends React.Component {
     }
 }
 
-Entry.contextType = GameContext;
+Entry.contextType = UserContext;

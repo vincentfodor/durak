@@ -15,18 +15,18 @@ import {
     StyledWelcome,
     StyledWelcomeMain,
     StyledWelcomeMessage,
-    StyledWelcomeSecondary
+    StyledWelcomeSecondary,
 } from "./index.style";
 
 import UserName from "../UserName";
 import Button from "../Button";
-import { GameContext } from "../../GameContext";
 import User from "../../api/User";
 import Loading from "../Loading";
 import Games from "../../api/Games";
 import Profile from "../Profile";
 import ErrorHandler from "../ErrorHandler";
 import { Redirect } from "react-router";
+import { UserContext } from "../../UserContext";
 
 export default class Welcome extends React.Component {
     state = {
@@ -35,7 +35,7 @@ export default class Welcome extends React.Component {
         mainContainerWidth: 0,
         games: [],
         selectedGameId: null,
-        errorMessage: null
+        errorMessage: null,
     };
 
     constructor(props) {
@@ -58,6 +58,8 @@ export default class Welcome extends React.Component {
                 mainContainerWidth: this.mainContainer.current.offsetWidth,
             });
 
+            console.log(this.context);
+
             User.Auth(auth)
                 .then(({ data }) => {
                     this.context.setUser({
@@ -74,14 +76,14 @@ export default class Welcome extends React.Component {
                         })
                         .catch((err) => {
                             this.setState({
-                                errorMessage: err
-                            })
+                                errorMessage: err,
+                            });
                         });
                 })
                 .catch((err) => {
                     this.setState({
-                        errorMessage: err
-                    })
+                        errorMessage: err,
+                    });
                 });
 
             this.setState({ isLoading: false, isLoadingGames: false });
@@ -129,17 +131,17 @@ export default class Welcome extends React.Component {
             })
             .catch((err) => {
                 this.setState({
-                    errorMessage: err
-                })
+                    errorMessage: err,
+                });
             });
     };
 
     createGame = () => {
-        Games.Create(this.context.user).catch(err => {
+        Games.Create(this.context.user).catch((err) => {
             this.setState({
-                errorMessage: "Couldn't create game"
-            })
-        })
+                errorMessage: "Couldn't create game",
+            });
+        });
     };
 
     joinGame = (gameId) => {
@@ -222,4 +224,4 @@ export default class Welcome extends React.Component {
     }
 }
 
-Welcome.contextType = GameContext;
+Welcome.contextType = UserContext;
