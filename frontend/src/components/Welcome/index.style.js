@@ -12,7 +12,7 @@ const StyledWelcome = styled.div`
     height: 100%;
     padding: ${PixelSizeSwitch("medium")};
 
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 768px) {
         flex-direction: column;
     }
 `;
@@ -34,7 +34,7 @@ const StyledWelcomeSecondary = styled.div`
     box-sizing: border-box;
     border-radius: 3px;
 
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 768px) {
         width: 100%;
         margin-right: 0;
         margin-bottom: ${PixelSizeSwitch("medium")};
@@ -46,5 +46,5 @@ export {
     StyledWelcome,
     StyledWelcomeMain,
     StyledWelcomeMessage,
-    StyledWelcomeSecondary
+    StyledWelcomeSecondary,
 };

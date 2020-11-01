@@ -36,6 +36,8 @@ export default class Welcome extends React.Component {
         games: [],
         selectedGameId: null,
         errorMessage: null,
+        errorSubmessage: null,
+        errorRedirect: null,
     };
 
     constructor(props) {
@@ -45,6 +47,8 @@ export default class Welcome extends React.Component {
 
     componentDidMount = () => {
         const auth = localStorage.getItem("durak-challengers-auth");
+
+        console.log(auth);
 
         if (
             !this.context.user.username &&
@@ -60,6 +64,14 @@ export default class Welcome extends React.Component {
 
             User.Auth(auth)
                 .then(({ data }) => {
+                    if (!data.success) {
+                        this.setState({
+                            errorMessage: data.errors[0],
+                            errorRedirect: "/",
+                            errorSubmessage: "Redirecting to login...",
+                        });
+                    }
+
                     this.context.setUser({
                         username: data.data.username,
                         email: data.data.email,
@@ -148,7 +160,10 @@ export default class Welcome extends React.Component {
     render() {
         return (
             <StyledWelcomeWrapper>
-                <ErrorHandler message={this.state.errorMessage} />
+                <ErrorHandler
+                    message={this.state.errorMessage}
+                    redirect={this.state.errorRedirect}
+                />
                 {this.state.selectedGameId ? (
                     <Redirect to={`/play/${this.state.selectedGameId}`} />
                 ) : null}
