@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import {PixelSizeSwitch} from "../../helpers/PixelSizeHelper"
-import {FontSizeSwitch} from "../../helpers/FontSizeHelper"
+import { PixelSizeSwitch } from "../../helpers/PixelSizeHelper";
+import { FontSizeSwitch } from "../../helpers/FontSizeHelper";
 
 const StyledProfile = styled.div`
     flex-direction: column;
@@ -11,13 +11,18 @@ const StyledProfile = styled.div`
         font-size: ${FontSizeSwitch("medium")};
         margin-bottom: ${PixelSizeSwitch("medium")};
     }
-`
+`;
 
 const StyledProfilePic = styled.img`
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    margin-bottom: ${PixelSizeSwitch("medium-small")}
-`
+    margin-bottom: ${PixelSizeSwitch("medium-small")};
 
-export {StyledProfile, StyledProfilePic};
+    @media only screen and (max-width: 924px) {
+        width: 75px;
+        height: 75px;
+    }
+`;
+
+export { StyledProfile, StyledProfilePic };

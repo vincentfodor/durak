@@ -58,8 +58,6 @@ export default class Welcome extends React.Component {
                 mainContainerWidth: this.mainContainer.current.offsetWidth,
             });
 
-            console.log(this.context);
-
             User.Auth(auth)
                 .then(({ data }) => {
                     this.context.setUser({
@@ -67,18 +65,6 @@ export default class Welcome extends React.Component {
                         email: data.data.email,
                         uuid: data.data.uuid,
                     });
-
-                    Games.Fetch()
-                        .then(({ data }) => {
-                            this.setState({
-                                games: data.games,
-                            });
-                        })
-                        .catch((err) => {
-                            this.setState({
-                                errorMessage: err,
-                            });
-                        });
                 })
                 .catch((err) => {
                     this.setState({
@@ -88,6 +74,8 @@ export default class Welcome extends React.Component {
 
             this.setState({ isLoading: false, isLoadingGames: false });
         }
+
+        this.refreshGames();
     };
 
     renderWelcomeMessage = (username) => {
@@ -143,7 +131,7 @@ export default class Welcome extends React.Component {
                     this.joinGame(data.data.newGame.gameId);
                 }
             })
-            .catch((err) => {
+            .catch(() => {
                 this.setState({
                     errorMessage: "Couldn't create game",
                 });
