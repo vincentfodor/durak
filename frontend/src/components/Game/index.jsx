@@ -30,8 +30,6 @@ export default class Game extends React.Component {
         this.setState(
             {
                 gameId: this.props.match.params.id,
-                errorMessage: "This is some error!",
-                errorSubMessage: "This is a submessage..."
             },
             () => {
                 Games.Join(this.state.gameId, this.context.user).then(
