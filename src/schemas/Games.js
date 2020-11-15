@@ -18,6 +18,9 @@ const adjectives = [
     "Barren",
     "Happy",
     "Trippy",
+    "Healthy",
+    "Dying",
+    "Suffering",
 ];
 
 const nouns = [
@@ -32,7 +35,6 @@ const nouns = [
     "Cat",
     "Software",
     "Hardware",
-    "b7",
 ];
 
 const generateGameId = () => {

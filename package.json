@@ -5,6 +5,7 @@
     "main": "src/index.js",
     "scripts": {
         "start": "nodemon src/index.js",
+        "gource": "gource --bloom-multiplier 1.1 --bloom-intensity 0.3 --seconds-per-day 1 --background 000000 --title \"Durak: Challangers\" -e 0.5 --disable-auto-skip",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Vincent Fodor",
