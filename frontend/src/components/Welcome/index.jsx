@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router";
 
 import Header from "../Header";
 import {
@@ -25,7 +26,6 @@ import Loading from "../Loading";
 import Games from "../../api/Games";
 import Profile from "../Profile";
 import ErrorHandler from "../ErrorHandler";
-import { Redirect } from "react-router";
 import { UserContext } from "../../UserContext";
 
 export default class Welcome extends React.Component {
@@ -38,6 +38,7 @@ export default class Welcome extends React.Component {
         errorMessage: null,
         errorSubmessage: null,
         errorRedirect: null,
+        errorHandlerShouldDisplayIndex: 0,
     };
 
     constructor(props) {
@@ -47,8 +48,6 @@ export default class Welcome extends React.Component {
 
     componentDidMount = () => {
         const auth = localStorage.getItem("durak-challengers-auth");
-
-        console.log(auth);
 
         if (
             !this.context.user.username &&
@@ -65,17 +64,26 @@ export default class Welcome extends React.Component {
             User.Auth(auth)
                 .then(({ data }) => {
                     if (!data.success) {
-                        this.setState({
+                        // Authentication error
+                        this.setState((prevState) => ({
                             errorMessage: data.errors[0],
                             errorRedirect: "/",
                             errorSubmessage: "Redirecting to login...",
-                        });
+                            errorHandlerShouldDisplayIndex:
+                                prevState.errorHandlerShouldDisplayIndex + 1,
+                        }));
                     }
 
+                    // User authenticated
+
+                    let username = data.data.username;
+                    let email = data.data.email;
+                    let uuid = data.data.uuid;
+
                     this.context.setUser({
-                        username: data.data.username,
-                        email: data.data.email,
-                        uuid: data.data.uuid,
+                        username,
+                        email,
+                        uuid,
                     });
                 })
                 .catch((err) => {
@@ -163,6 +171,9 @@ export default class Welcome extends React.Component {
                 <ErrorHandler
                     message={this.state.errorMessage}
                     redirect={this.state.errorRedirect}
+                    shouldDisplayIndex={
+                        this.state.errorHandlerShouldDisplayIndex
+                    }
                 />
                 {this.state.selectedGameId ? (
                     <Redirect to={`/play/${this.state.selectedGameId}`} />

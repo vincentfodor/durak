@@ -1,4 +1,5 @@
 import React, { createContext } from "react";
+import * as io from "socket.io-client";
 
 const UserContext = createContext();
 
@@ -12,14 +13,25 @@ class UserProvider extends React.Component {
             uuid: null,
         },
         setUser: null,
+        socket: null,
     };
 
     componentDidMount = () => {
-        this.setState({ setUser: this.setUser });
+        const endpoint = "http://127.0.0.1:8080";
+
+        this.setState({ setUser: this.setUser, setSocket: this.setSocket });
+
+        this.setState({
+            socket: io(endpoint),
+        });
     };
 
     setUser = (user) => {
-        this.setState({ user: user });
+        this.setState({ user });
+    };
+
+    setSocket = (socket) => {
+        this.setState({ socket });
     };
 
     render() {

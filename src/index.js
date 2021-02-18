@@ -15,7 +15,8 @@ const CreateGameHandler = require("./handlers/CreateGame");
 const JoinGameHandler = require("./handlers/JoinGame");
 
 const Games = require("./schemas/Games");
-const Deck = require("./schemas/Deck");
+
+const players = [];
 
 //* undefined for local testing like postman or curl
 const whitelist = [
@@ -49,7 +50,7 @@ app.post("/register", RegisterHandler);
 app.post("/login", LoginHandler);
 app.post("/auth", AuthHandler);
 app.post("/create", CreateGameHandler);
-app.post("/join", JoinGameHandler);
+app.post("/join", (req, res, io) => JoinGameHandler(req, res, io));
 
 app.get("/get", GetGamesHandler);
 
@@ -60,6 +61,10 @@ server.listen(port, () => {
 io.on("connection", (socket) => {
     console.log("Socket has connected to the server");
 
+    socket.on("loginEvent", (data) => {
+        console.log(data);
+    });
+
     socket.on("sendMessage", (data) => {
         socket.to("ROOM00001").emit("sendMessageCallback", data);
         console.log(data);
@@ -67,5 +72,9 @@ io.on("connection", (socket) => {
 
     socket.on("disconnect", () => {
         console.log("Socket has disconnected from the server");
+    });
+
+    socket.on("joinGameEvent", (data) => {
+        console.log("Player joined game", data);
     });
 });

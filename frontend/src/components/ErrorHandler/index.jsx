@@ -8,11 +8,16 @@ const ErrorHandler = ({
     subMessage,
     redirect,
     animationDuration = 3000,
+    shouldDisplayIndex,
 }) => {
     const [isDisplayed, setIsDisplayed] = useState(false);
     const [redirectPath, setRedirectPath] = useState(null);
 
     useEffect(() => {
+        if (shouldDisplayIndex === 0) {
+            return;
+        }
+
         setIsDisplayed(true);
 
         setTimeout(() => {
@@ -20,7 +25,7 @@ const ErrorHandler = ({
 
             setRedirectPath(redirect);
         }, animationDuration);
-    }, [message]);
+    }, [shouldDisplayIndex]);
 
     if (message && isDisplayed) {
         return (

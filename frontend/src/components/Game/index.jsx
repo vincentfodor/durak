@@ -35,6 +35,7 @@ export default class Game extends React.Component {
                 Games.Join(this.state.gameId, this.context.user).then(
                     ({ data }) => {
                         if (!data.success) {
+                            // Game join error
                             this.setState({
                                 errorMessage: data.errors[0],
                                 errorSubMessage: "Disconnecting...",
@@ -52,6 +53,21 @@ export default class Game extends React.Component {
                 );
             }
         );
+    };
+
+    componentDidUpdate = () => {
+        const { user, socket } = this.context;
+
+        if (socket) {
+            socket.emit("joinGameEvent", {
+                user: {
+                    username: user.username,
+                    email: user.email,
+                    uuid: user.uuid,
+                },
+                gameId: this.state.gameId,
+            });
+        }
     };
 
     appendCard = (card, position) => {
@@ -120,7 +136,7 @@ export default class Game extends React.Component {
                             opponent
                             trumpSuit="spade"
                             cardCount={this.state.opponentCardCount}
-                            socket={this.props.socket}
+                            socket={this.context.socket}
                             isLoading={this.state.isLoading}
                         />
                         <PlayingArea
@@ -132,7 +148,7 @@ export default class Game extends React.Component {
                         />
                         <Hand
                             trumpSuit="spade"
-                            socket={this.props.socket}
+                            socket={this.context.socket}
                             cards={this.state.playerCards}
                             isLoading={this.state.isLoading}
                             appendCard={this.appendCard}
