@@ -14,9 +14,7 @@ const GetGamesHandler = require("./handlers/GetGames");
 const CreateGameHandler = require("./handlers/CreateGame");
 const JoinGameHandler = require("./handlers/JoinGame");
 
-const Games = require("./schemas/Games");
-
-const players = [];
+const gameManager = require("./gameManager");
 
 //* undefined for local testing like postman or curl
 const whitelist = [
@@ -35,7 +33,7 @@ var corsOptions = {
     },
 };
 
-Games.CreateGame("server", 1000, 2);
+gameManager.CreateGame("server", 1000, 2);
 
 app.use(cors(corsOptions));
 
@@ -72,9 +70,26 @@ io.on("connection", (socket) => {
 
     socket.on("disconnect", () => {
         console.log("Socket has disconnected from the server");
+        //Games.LeaveGame(data.gameId, data.user);
     });
 
     socket.on("joinGameEvent", (data) => {
-        console.log("Player joined game", data);
+        const { gameId, user } = data;
+
+        if (!user.username || !user.email || !user.uuid) {
+            throw new Error(
+                `[JOIN] Failed to join lobby ${gameId}, user not given.`
+            );
+        }
+
+        gameManager.AddPlayer(gameId, user);
+        gameManager.AttachSocketToPlayer(gameId, user.uuid, socket.id);
+    });
+
+    socket.on("leaveGameEvent", (data) => {
+        const { gameId } = data;
+
+        console.log("leaveData: " + JSON.stringify(data));
+        gameManager.RemovePlayer(gameId, socket.id);
     });
 });

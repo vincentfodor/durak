@@ -1,8 +1,6 @@
 const APIResponse = require("./ApiResponse");
 const Game = require("./Game");
 
-const lobbys = [];
-
 const adjectives = [
     "Salty",
     "Sexy",
@@ -37,68 +35,98 @@ const nouns = [
     "Hardware",
 ];
 
-const generateGameId = () => {
-    let aSalt = Math.floor(Math.random() * (adjectives.length - 1));
-    let nSalt = Math.floor(Math.random() * (nouns.length - 1));
-
-    return adjectives[aSalt] + nouns[nSalt];
-};
-
-const generateUniqueGameId = () => {
-    let generatedGameId = generateGameId();
-
-    for (let i = 0; i < lobbys.length; i++) {
-        if (lobbys[i].gameid == generatedGameId) {
-            while (lobbys[i].gameid == generatedGameId) {
-                generatedGameId = generateGameId();
-            }
-        }
+class Games {
+    constructor() {
+        this.games = [];
     }
 
-    return generatedGameId;
-};
+    generateGameId = () => {
+        let aSalt = Math.floor(Math.random() * (adjectives.length - 1));
+        let nSalt = Math.floor(Math.random() * (nouns.length - 1));
 
-const Games = {
-    CreateGame: (creator, bet, maxPlayers) => {
-        const newGame = new Game(generateUniqueGameId(), creator, {
+        return adjectives[aSalt] + nouns[nSalt];
+    };
+
+    generateUniqueGameId = () => {
+        let generatedGameId = this.generateGameId();
+
+        for (let i = 0; i < this.games.length; i++) {
+            if (this.games[i].gameid == generatedGameId) {
+                while (this.games[i].gameid == generatedGameId) {
+                    generatedGameId = this.generateGameId();
+                }
+            }
+        }
+
+        return generatedGameId;
+    };
+
+    CreateGame = (creator, bet, maxPlayers) => {
+        const newGame = new Game(this.generateUniqueGameId(), creator, {
             bet,
             maxPlayers,
         });
 
-        lobbys.push(newGame);
+        this.games.push(newGame);
 
         console.log("[LOBBY] " + newGame.gameId + " has been created.");
 
-        return new APIResponse(false, {
-            newGame,
-        });
-    },
-    FetchGames: () => lobbys,
-    JoinGame: (gameId, player) => {
-        let targetLobby = lobbys.filter((lobby) => lobby.gameId === gameId);
+        return newGame;
+    };
 
-        if (targetLobby.length === 0) {
-            return new APIResponse([
-                "Lobby with ID " + gameId + " does not exist.",
-            ]);
+    FetchGames = () => this.games;
+
+    GetLobbyByGameId = (gameId) => {
+        const lobby = this.games.filter((lobby) => lobby.gameId === gameId)[0];
+
+        if (!lobby) {
+            return false;
         }
 
-        targetLobby = targetLobby[0];
+        return lobby;
+    };
+
+    AddPlayer = (gameId, player) => {
+        let targetLobby = this.GetLobbyByGameId(gameId);
+
+        if (!targetLobby) {
+            return false;
+        }
 
         if (targetLobby.GetPlayer(player.uuid)) {
-            console.log("Player already in lobby!");
-            console.log(targetLobby.GetPlayer(player.uuid));
-            return new APIResponse(false, {
-                drawnCards: targetLobby.GetPlayer(player.uuid).hand,
-            });
+            return false;
         }
 
-        targetLobby.AddPlayer(player);
+        return targetLobby.AddPlayer(player);
+    };
 
-        return new APIResponse(false, {
-            drawnCards: targetLobby.DrawCards(player.uuid, 6),
-        });
-    },
-};
+    RemovePlayer = (gameId, socketId) => {
+        let targetLobby = this.GetLobbyByGameId(gameId);
+
+        if (!targetLobby) {
+            return false;
+        }
+
+        let player = targetLobby.GetPlayerBySocketId(socketId);
+
+        if (!player) {
+            return false;
+        }
+
+        targetLobby.RemovePlayer(player);
+
+        return true;
+    };
+
+    AttachSocketToPlayer = (gameId, uuid, socket) => {
+        const lobby = this.GetLobbyByGameId(gameId);
+
+        if (!lobby) {
+            return false;
+        }
+
+        return lobby.AttachSocketToPlayer(uuid, socket);
+    };
+}
 
 module.exports = Games;

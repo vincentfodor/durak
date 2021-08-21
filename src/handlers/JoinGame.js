@@ -1,7 +1,14 @@
-const Games = require("../schemas/Games");
+const gameManager = require("../gameManager");
+const APIResponse = require("../schemas/ApiResponse");
 
-module.exports = (req, res, io) => {
+module.exports = (req, res) => {
     const { gameId, player } = req.body;
 
-    res.json(Games.JoinGame(gameId, player));
+    if (gameManager.AddPlayer(gameId, player)) {
+        res.json(new APIResponse(false));
+    } else {
+        res.json(new APIResponse(["Failed to join lobby"]));
+    }
+
+    res.end();
 };

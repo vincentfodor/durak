@@ -6,7 +6,6 @@ import "./styles.css";
 import Game from "./components/Game";
 import Entry from "./components/Entry";
 import Welcome from "./components/Welcome";
-import { UserProvider } from "./UserContext";
 
 export default class App extends React.Component {
     constructor(props) {

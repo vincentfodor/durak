@@ -46,8 +46,12 @@ const Table = ({
     );
 };
 
-const TableRow = ({ children, onClick }) => {
-    return <StyledTableRow onClick={onClick}>{children}</StyledTableRow>;
+const TableRow = ({ children, onClick, disabled }) => {
+    return (
+        <StyledTableRow onClick={onClick} disabled={disabled}>
+            {children}
+        </StyledTableRow>
+    );
 };
 
 const TableColumn = ({ children }) => {

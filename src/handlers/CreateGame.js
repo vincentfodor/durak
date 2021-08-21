@@ -1,7 +1,7 @@
-const Games = require("../schemas/Games");
+const gameManager = require("../gameManager");
 
 module.exports = (req, res) => {
     const { creator, bet, maxPlayers } = req.body;
 
-    res.json(Games.CreateGame(creator, bet, maxPlayers));
+    res.json(gameManager.CreateGame(creator, bet, maxPlayers));
 };

@@ -116,8 +116,13 @@ export default class Welcome extends React.Component {
 
     renderGames = () => {
         return this.state.games.map((game) => (
-            <TableRow onClick={() => this.joinGame(game.gameId)}>
-                <TableColumn>1 / {game.config.maxPlayers}</TableColumn>
+            <TableRow
+                onClick={() => this.joinGame(game.gameId)}
+                disabled={game.players === game.config.maxPlayers}
+            >
+                <TableColumn>
+                    {game.players} / {game.config.maxPlayers}
+                </TableColumn>
                 <TableColumn>{game.gameId}</TableColumn>
                 <TableColumn>
                     <UserName username={game.creator} />
@@ -160,6 +165,10 @@ export default class Welcome extends React.Component {
     };
 
     joinGame = (gameId) => {
+        const { socket } = this.context;
+
+        socket.io.emit("joinGameEvent", { gameId, user: this.context.user });
+
         this.setState({
             selectedGameId: gameId,
         });

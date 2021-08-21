@@ -10,7 +10,7 @@ import { StyledGameWrapper, StyledGame } from "./index.style";
 import MultiBackend from "react-dnd-multi-backend";
 import Games from "../../api/Games";
 import ErrorHandler from "../ErrorHandler";
-import { UserContext } from "../../UserContext";
+import { UserProvider } from "../../UserContext";
 
 export default class Game extends React.Component {
     state = {
@@ -123,7 +123,7 @@ export default class Game extends React.Component {
                     redirect={this.state.errorRedirect}
                 />
                 <Header
-                    gameid={this.state.gameId}
+                    gameId={this.state.gameId}
                     opponent="test"
                     wins={0}
                     loses={0}

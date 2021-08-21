@@ -12,7 +12,7 @@ module.exports = class Game {
     }
 
     AddPlayer = (newPlayer) => {
-        if (this.config.maxPlayers < this.players.length) {
+        if (this.config.maxPlayers <= this.players.length) {
             return false;
         }
 
@@ -21,9 +21,47 @@ module.exports = class Game {
         return true;
     };
 
-    GetPlayer = (uuid) => {
-        return this.players.filter((player) => player.uuid === uuid)[0];
+    RemovePlayer = (existingPlayer) => {
+        let playerIndex = this.players.findIndex(
+            (player) => player.uuid === existingPlayer.uuid
+        );
+
+        if (!~playerIndex) {
+            return false;
+        }
+
+        this.players.splice(playerIndex, 1);
+
+        return true;
     };
+
+    GetPlayer = (uuid) => {
+        const player = this.players.filter((player) => player.uuid === uuid)[0];
+
+        if (!player) {
+            return false;
+        }
+
+        return player;
+    };
+
+    GetPlayerCards = (uuid) => {
+        let player = this.GetPlayer(uuid);
+
+        if (!player) {
+            return false;
+        }
+
+        return player.hand;
+    };
+
+    GetPlayerBySocketId = (socketId) => {
+        return this.players.filter((player) => player.socket === socketId)[0];
+    };
+
+    GetPlayers = () => this.players;
+
+    GetTotalPlayers = () => this.players.length;
 
     DrawCards = (uuid, n) => {
         let cards = this.deck.DrawCards(n);
@@ -37,5 +75,9 @@ module.exports = class Game {
         ];
 
         return cards;
+    };
+
+    AttachSocketToPlayer = (uuid, socket) => {
+        this.GetPlayer(uuid).socket = socket;
     };
 };

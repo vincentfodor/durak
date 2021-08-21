@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Button from "../Button";
 import { Redirect } from "react-router-dom";
 
@@ -13,9 +13,10 @@ import {
     StyledHeaderLeaveButtonWrapper,
 } from "./index.style";
 import Loading from "../Loading";
+import { UserContext } from "../../UserContext";
 
 const Header = ({
-    gameid,
+    gameId,
     wins,
     loses,
     opponent,
@@ -23,10 +24,11 @@ const Header = ({
     waitingForOpponent,
 }) => {
     const [gameLeft, setGameLeft] = useState(false);
+    const context = useContext(UserContext);
 
     const renderGameId = () => {
-        if (gameid) {
-            return gameid;
+        if (gameId) {
+            return gameId;
         }
     };
 
@@ -71,6 +73,12 @@ const Header = ({
     };
 
     const leaveGame = () => {
+        const { socket, user } = context;
+
+        console.log(gameId);
+
+        socket.emit("leaveGameEvent", { gameId, user });
+
         setGameLeft(true);
     };
 

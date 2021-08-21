@@ -12,7 +12,7 @@ const Users = {
         const errors = [];
 
         DatabaseConnection.query(
-            `SELECT users.username, users.email FROM durak.users WHERE username = ? OR email = ?`,
+            `SELECT users.username, users.email FROM dc.users WHERE username = ? OR email = ?`,
             [username, email],
             (error, response) => {
                 if (error) {
@@ -60,7 +60,7 @@ const Users = {
                 }
 
                 DatabaseConnection.query(
-                    `INSERT INTO durak.users (users.username, users.email, users.password, users.uuid) VALUES (?, ?, ?, ?)`,
+                    `INSERT INTO dc.users (users.username, users.email, users.password, users.uuid) VALUES (?, ?, ?, ?)`,
                     [username, email, sha256(password), uuid.v4()],
                     (error) => {
                         if (error) {
@@ -85,7 +85,7 @@ const Users = {
                 users.password, \
                 users.uuid \
             FROM \
-                durak.users \
+                dc.users \
             where \
                 users.username = ? AND \
                 users.password = ? OR \
@@ -152,7 +152,7 @@ const Users = {
                     users.email, \
                     users.uuid \
                 FROM \
-                    durak.users \
+                    dc.users \
                 WHERE \
                     users.username = ? OR \
                     users.email = ? \

@@ -45,7 +45,11 @@ const StyledTable = styled.table`
 `;
 
 const StyledTableRow = styled.tr`
-    cursor: ${({ onClick }) => (onClick ? "pointer" : "inherit")};
+    cursor: ${({ onClick, disabled }) =>
+        onClick ? (disabled ? "not-allowed" : "pointer") : "inherit"};
+    background-color: ${({ disabled }) =>
+        disabled ? "rgba(0, 0, 0, 0.03)" : "transparent"};
+    opacity: ${({ disabled }) => (disabled ? "0.6" : "1")};
 
     :hover {
         background-color: ${({ onClick }) =>
